@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/assets/css/style.css">
+
+
+    <title>Update profile</title>
+  </head>
+  <body class="update_body">
+
+
+        <h2>Update profile</h2>
+        <form method="POST">
+
+            {% csrf_token %}
+             {% if inserted %}
+            <script>alert('Sucessfully updated');</script>
+            {% endif %}
+
+
+            <div class="inputBox">
+                <label for="update_name">Update Name</label>
+                <input type="text" name="update_name" required="">
+
+            </div>
+            <div class="inputBox">
+                <label for="update_email">Update Email</label>
+                <input type="text" name="update_email" required="">
+
+            </div>
+
+            <div class="inputBox">
+                <label for="update_mobile"> update Contact number</label>
+                <input type="text" name="update_mobile" required="">
+
+            </div>
+
+            <input type="submit" name="" value="Update">
+        </form>
+    </div>
+
+
+    <script src="/assets/js/jquery.js"></script>
+   <script src="/assets/js/popper.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+  </body>
+</html>

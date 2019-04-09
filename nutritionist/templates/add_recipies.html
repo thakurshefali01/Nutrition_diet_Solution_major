@@ -1,0 +1,39 @@
+{% extends 'master_page_nutri.html' %}
+{% block title %}
+Add Recipe
+{% endblock title %}
+{% block content %}
+<div class="signup-body">
+		<div class="agile-signup">
+
+			<div class="content2">
+				<div class="grids-heading gallery-heading signup-heading">
+					<h2>Add Recipes</h2>
+				</div>
+				<form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ dict.as_p }}
+                    {% if inserted %}
+                    <script>alert('data inserted');</script>
+                    {% endif %}
+                    <select name="recipe_category" >
+                        <option value="0">Select</option>
+                        {% if ud %}
+                        {% for i in ud %}
+                        <option value="{{ i.category_id }}">{{ i.category_name }}</option>
+                        {% endfor %}
+                        {% else %}
+                        <option>No Category Found</option>
+                        {% endif %}
+                    </select>
+					<input type="text" name="recipe_name" value="recipe name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe name';}">
+					<input type="text" name="recipe_description" value="recipe description" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe description';}">
+                    <input type="file" name="recipe_image" value="recipe image" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe image';}">
+                    <input type="submit" class="register" value="Add recipe">
+				</form>
+				<a href="{% url 'nutritionist:nutri_index' %}">Back To Home</a>
+			</div>
+        </div>
+</div>
+
+{% endblock content %}

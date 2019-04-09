@@ -1,0 +1,37 @@
+{% extends 'master_page_nutri.html' %}
+{% block title %}
+Recipe Procedure
+{% endblock title %}
+{% block content %}
+<div class="procedure-body">
+		<div class="agile-procedure">
+<div class="content2">
+				<div class="grids-heading gallery-heading signup-heading">
+					<h2>Add procedure</h2>
+				</div>
+                <div class="add_procedure">
+				<form method="post">
+                    {% csrf_token %}
+                    {{ dict.as_p }}
+                    {% if inserted %}
+                    <script>alert('data inserted');</script>
+                    {% endif %}
+                    <label for="recipe_name">Name</label><input type="text" name="recipe_name"><br>
+
+                    <label for="recipe_discription">Description</label><input type="text" name="recipe_description">
+                    <label for="prepration_time">Prepration Time</label><input type="text" name="prepration_time">
+                    <label for="cook_time">Cooking time</label><input type="text" name="cook_time">
+                    <label for="total_time">Total time</label><input type="text" name="total_time">
+                    <label for="recipe_ingredients">Ingredients</label><input type="text" name="recipe_ingredients">
+                    <label for="recipe_instructions">Instructions</label><input type="text" name="recipe_instructions" >
+                    <label for="recipe_note">Note</label><input type="text" name="recipe_note"  >
+                    <input type="submit" class="register" value="Add procedure">
+				</form>
+                </div>
+				<a href="{% url 'nutritionist:add_recipe' %}?id={{ i.recipe_id }}">Back To Add recipe page</a>
+			</div>
+</div>
+
+
+
+{% endblock content %}

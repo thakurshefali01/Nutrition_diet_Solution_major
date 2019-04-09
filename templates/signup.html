@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/assets/css/style.css">
+
+
+    <title>Sign Up</title>
+  </head>
+  <body class="signup_body">
+    <div class="signup_box" >
+
+        <h2>Sign Up</h2>
+        <form method="POST">
+
+            {% csrf_token %}
+             {% if inserted %}
+            <script>alert('Sucessfully registered');</script>
+            {% endif %}
+
+            <select name="role_id" class="dropdown" >
+                <option value="3">user</option>
+                <option value="2">Nutritionist</option>
+            </select>
+            <div class="inputBox">
+                <input type="text" name="user_name" required="">
+                <label for="user_name">Name</label>
+            </div>
+            <div class="inputBox">
+                <input type="text" name="user_email" required="">
+                <label for="user_email">Email</label>
+            </div>
+
+            <div class="inputBox">
+                <input type="text" name="user_mobile" required="">
+                <label for="user_mobile">Contact number</label>
+            </div>
+            <div class="inputBox">
+                <input type="password" name="user_password" required="">
+                <label for="user_password">Password</label>
+            </div>
+
+            <div class="inputBox">
+                <input type="password" name="" required="">
+                <label>Confirm Password</label>
+            </div>
+            <input type="submit" name="" value="Sign Up">
+        </form>
+    </div>
+
+
+    <script src="/assets/js/jquery.js"></script>
+   <script src="/assets/js/popper.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+  </body>
+</html>
