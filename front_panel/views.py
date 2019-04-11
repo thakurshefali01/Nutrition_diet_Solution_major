@@ -1,7 +1,7 @@
 from django.shortcuts import render,HttpResponse,redirect
 from front_panel.forms import MySite_UserForm
 from front_panel.models import MySite_User
-
+from nutritionist.models import recipe_procedure_tb,recipes
 # Create your views here.
 def index(request):
         if (request.method=="POST"):
@@ -31,22 +31,19 @@ def index(request):
 
         return render(request, "home.html")
 
-
-
-
 def about(request):
     return render(request,"about.html")
 
 def contact(request):
     return render(request,"contact.html")
 
-def recipes(request):
-    return render(request, "recipes.html")
+
 
 def exercise(request):
     return render(request, "exercise.html")
 
 def single(request):
+
     return render(request,"single.html")
 
 
@@ -104,3 +101,8 @@ def change_password(request):
 
 
     return render(request,"change_password.html")
+
+
+def recipes_page(request):
+    recipe_data = recipes.objects.all()
+    return render(request, "recipes.html",{'rd':recipe_data})

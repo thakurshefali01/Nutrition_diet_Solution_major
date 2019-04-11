@@ -8648,6 +8648,8 @@ h1, h2, h3, h4, h5,
     -ms-border-radius: 4px;
     border-radius: 4px; }
     .blog-entry .img-2 img {
+      width:400px;
+      height:300px;
       -webkit-transform: scale(1);
       -moz-transform: scale(1);
       -o-transform: scale(1);

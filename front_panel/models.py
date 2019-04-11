@@ -18,3 +18,9 @@ class MySite_User(models.Model):
     user_isavailable=models.BooleanField(default=True)
     user_isqueue=models.BooleanField(default=False)
     user_lastlogin=models.CharField(max_length=255,default="")
+
+class Login_details(models.Model):
+    login_id = models.AutoField(primary_key=True)
+    login_time = models.CharField(max_length=255)
+    logout_time = models.CharField(max_length=255)
+    user_name = models.CharField(max_length=255)

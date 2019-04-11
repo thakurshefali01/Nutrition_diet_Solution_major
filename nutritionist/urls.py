@@ -9,5 +9,7 @@ urlpatterns=[
     url(r'^view_recipe/$',views.view_recipe,name="view_recipe"),
     url(r'^add_procedure/$',views.add_procedure,name="add_procedure"),
     url(r'^view_procedure/$',views.view_procedure,name="view_procedure"),
-    url(r'^delete/$',views.delete,name="delete")
+    url(r'^delete/$',views.delete,name="delete"),
+    url(r'^edit_recipe/$',views.edit_recipe,name="edit_recipe"),
+    url(r'^edit_procedure/$',views.edit_procedure,name="edit_procedure")
 ]

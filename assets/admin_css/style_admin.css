@@ -3469,6 +3469,7 @@ button.note-color-btn {
     -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
 }
+
 .agileits-caption {
 	background: rgba(0, 0, 0, 0.62);
     padding: 1em;
@@ -3485,6 +3486,7 @@ button.note-color-btn {
 .agile-gallery:hover .agileits-caption {
     bottom: 0%;
 	overflow-y:scroll;
+
 }
 .agileits-caption h4{
     color: #FFFFFF;
@@ -3496,6 +3498,10 @@ button.note-color-btn {
     font-size: 1em;
     margin: 0;
     line-height: 1.8em;	
+}
+.agileits-caption a{
+	margin:10px;
+
 }
 /*-- //gallery --*/
 /*-- calendar --*/

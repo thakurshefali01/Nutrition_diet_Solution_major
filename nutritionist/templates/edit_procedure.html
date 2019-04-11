@@ -1,0 +1,36 @@
+{% extends 'master_page_nutri.html' %}
+{% block title %}
+Recipe Procedure
+{% endblock title %}
+{% block content %}
+<div class="procedure-body">
+		<div class="agile-procedure">
+<div class="content2">
+				<div class="grids-heading gallery-heading signup-heading">
+					<h2>Edit procedure</h2>
+				</div>
+                <div class="add_procedure">
+				<form method="post">
+                    {% csrf_token %}
+                    {{ dict.as_p }}
+                    {% if inserted %}
+                    <script>alert('data inserted');</script>
+                    {% endif %}
+                    <label for="recipe_name">Name</label><input type="text" name="recipe_name" value="{{ gd.recipe_name }}">
+                    <label for="recipe_discription">Description</label><input type="text" name="recipe_discription" value="{{ gd.procedure_discription}}">
+                    <label for="prepration_time">Prepration Time</label><input type="text" name="prepration_time" value="{{ gd.prep_time }}">
+                    <label for="cook_time">Cooking time</label><input type="text" name="cook_time" value="{{ gd.cook_time }}">
+                    <label for="total_time">Total time</label><input type="text" name="total_time" value="{{ gd.total_time }}">
+                    <label for="recipe_ingredients">Ingredients</label><input type="text" name="recipe_ingredients" value="{{ gd.procedure_ingredients }}">
+                    <label for="recipe_instructions">Instructions</label><input type="text" name="recipe_instructions" value="{{ gd.procedure_instructions }}">
+                    <label for="recipe_note">Note</label><input type="text" name="recipe_note" value="{{ gd.procedure_notes }}"  >
+                    <input type="submit" class="register" value="Update">
+				</form>
+                </div>
+				<a href="{% url 'nutritionist:view_recipe' %}">Back To view recipe page</a>
+			</div>
+</div>
+
+</div>
+
+{% endblock content %}

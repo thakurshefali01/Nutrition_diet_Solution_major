@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, HttpResponse
 from django.core.files.storage import FileSystemStorage
 import authorize as au
 from nutritionist.forms import recipesForm ,recipe_procedure_tbForm
@@ -51,20 +51,6 @@ def add_recipe(request):
     return render(request,"add_recipies.html",{'ud':userdata})
 
 
-def view_recipe(request):
-    view_data=recipes.objects.all()
-    return render(request,"view_recipe.html",{'vd':view_data})
-
-
-def delete(request):
-    recipeId=request.GET['id']
-    try:
-        deleteUser=recipes.objects.get(recipe_id=recipeId)
-        deleteUser.delete()
-        return redirect("/view_recipe/")
-    except:
-        pass
-
 def add_procedure(request):
     if (request.method == "POST"):
         robj=recipes.objects.all()
@@ -74,6 +60,7 @@ def add_procedure(request):
         f.procedure_discription = request.POST['recipe_description']
         f.prep_time = request.POST['prepration_time']
         f.cook_time=request.POST['cook_time']
+        f.total_time = request.POST['total_time']
         f.procedure_ingredients = request.POST['recipe_ingredients']
         f.procedure_instructions = request.POST['recipe_instructions']
         f.procedure_notes = request.POST['recipe_note']
@@ -86,8 +73,78 @@ def add_procedure(request):
         return redirect("/view_recipe/",{'inserted': True})
     return render(request, "add_procedure.html" )
 
+
+def view_recipe(request):
+    email_id= request.session['emailid']
+    view_data=recipes.objects.filter(user_email=email_id)
+    return render(request,"view_recipe.html",{'vd':view_data})
+
 def view_procedure(request):
 
-    viewPro_Obj=request.GET['id']
+    r_id=request.GET['id']
+    pro_data=recipe_procedure_tb.objects.filter(recipe_id=r_id)
+    return render(request, "view_procedure.html",{'pd':pro_data})
 
-    return render(request, "view_procedure.html",{'vp':viewPro_Obj})
+
+def delete(request):
+    recipeId=request.GET['id']
+    try:
+        deleteUser=recipes.objects.get(recipe_id=recipeId)
+        deleteUser.delete()
+        return redirect("/view_recipe/")
+    except:
+        pass
+
+
+
+def edit_recipe(request):
+    editdata = category.objects.all()
+    edit_id = request.GET['id']
+    get_data = recipes.objects.get(recipe_id=edit_id)
+    if request.method=="POST":
+        recipeimage = None
+        if request.FILES:
+            myfile = request.FILES['recipe_image']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            fs.url(filename)
+            recipeimage = myfile.name
+        category_id= request.POST['recipe_category']
+        name = request.POST['recipe_name']
+        description = request.POST['recipe_description']
+        image=recipeimage
+        update = recipes(recipe_id=edit_id, category_id_id=category_id,recipe_name=name, recipe_description=description,recipe_image=image)
+        update.save(update_fields=["category_id_id","recipe_name","recipe_description","recipe_image"])
+        return redirect("/view_recipe/")
+    return render(request,"edit.html", {'vt':get_data,'ed':editdata})
+
+
+
+def edit_procedure(request):
+    edit_id = request.GET['id']
+    get_data = recipe_procedure_tb.objects.get(procedure_id=edit_id)
+    if request.method == "POST":
+        name=request.POST['recipe_name']
+        description=request.POST['recipe_discription']
+        prep_time=request.POST['prepration_time']
+        cook_time=request.POST['cook_time']
+        total_time=request.POST['total_time']
+        ingredients=request.POST['recipe_ingredients']
+        instructions=request.POST['recipe_instructions']
+        notes=request.POST['recipe_note']
+
+        update = recipe_procedure_tb(
+            procedure_id=edit_id,
+            recipe_name=name,
+            procedure_discription=description,
+            prep_time=prep_time,
+            cook_time=cook_time,
+            total_time=total_time,
+            procedure_ingredients=ingredients,
+            procedure_instructions=instructions,
+            procedure_notes=notes
+        )
+        update.save(update_fields=["recipe_name","procedure_discription","prep_time","cook_time","total_time","procedure_ingredients","procedure_instructions","procedure_notes"])
+        return redirect("/view_recipe/")
+    return render(request,"edit_procedure.html",{'gd':get_data})
+

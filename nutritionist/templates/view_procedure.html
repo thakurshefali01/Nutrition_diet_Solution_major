@@ -3,63 +3,66 @@
 Recipe Procedure
 {% endblock title %}
 {% block content %}
-<div>
-    {% if vp %}
-    {% for i in vp %}
+
+
 <div class="procedure-body">
+{% if pd %}
+ {% for i in pd %}
 		<div class="agile-procedure">
 
 			<div class="content2">
+
 				<div class="grids-heading gallery-heading signup-heading">
 					<h2>{{ i.recipe_name }}</h2>
 				</div>
+
                 <h2>PROCEDURE</h2>
                 <p>{{ i.procedure_discription }}</p>
                 <div class="spacer"></div>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Prep Time</th>
-                            <th>Cook Time</th>
-                            <th>Total Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                    <td>{{ i.prep_time }}</td>
-                    <td>{{ i.cook_time }}</td>
-                    <td>{{ i.total_time }}</td>
-                     </tr>
-                    </tbody>
-                </table>
-              </div>
-                <h2>INGRIDENTS</h2>
-                <ul>
-                    <li>{{ i.procedure_ingredients }}</li>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
 
-                </ul>
-                <h2>INSTRUCTIONS</h2>
-                <ul>
-                    <li>{{ i.procedure_ingredients }}</li>
+                                    <tr>
+                                        <th>Prep Time</th>
+                                        <th>Cook Time</th>
+                                        <th>Total Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                <td>{{ i.prep_time }}</td>
+                                <td>{{ i.cook_time }}</td>
+                                <td>{{ i.total_time }}</td>
+                                 </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                </ul>
-                <h2>NOTE</h2>
-                <ul>
-                    <li>{{ i.procedure_notes }}</li>
+                        <h2>INGRIDENTS</h2>
+                            <ul>
+                                <li>{{ i.procedure_ingredients }}</li>
+                            </ul>
+                        <h2>INSTRUCTIONS</h2>
+                            <ul>
+                                <li>{{ i.procedure_instructions }}</li>
+                            </ul>
+                        <h2>NOTE</h2>
+                            <ul>
+                                <li>{{ i.procedure_notes }}</li>
+                            </ul>
 
-                </ul>
+                <a href="{% url 'nutritionist:edit_procedure' %}?id={{ i.procedure_id }}" ><button type="button" class="btn btn-dark">Edit Procedure</button></a>
+
             </div>
 
+
         </div>
-</div>
+
 {% endfor %}
-
-
-{% else %}
-<h1> no data found </h1>
-{% endif %}
-
+ {% else %}
+ <h1> no data found </h1>
+  {% endif %}
 </div>
 
 {% endblock content %}
