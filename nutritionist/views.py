@@ -1,17 +1,20 @@
 from django.shortcuts import render,redirect, HttpResponse
 from django.core.files.storage import FileSystemStorage
-import authorize as au
+from miscellaneous import authorize as au,otp_generate as og,otp_send as os
+
 from nutritionist.forms import recipesForm ,recipe_procedure_tbForm
 from nutritionist.models import category,recipes,recipe_procedure_tb
 from front_panel.models import MySite_User
-# Create your views here.
+import smtplib
+from datetime import datetime
+
 def index_nutri(request):
     try:
-        auth = au.authorizeuser(request.session["authenticated"], request.session["roleid"],1)
+        auth = au.authorizeuser(request.session["authenticated"], request.session["roleid"],2)
     except:
         return redirect("/notlogin/")
 
-    if (auth):
+    if (auth==True):
         return render(request, "index_nutri.html")
     else:
         aut, message = auth
@@ -70,7 +73,7 @@ def add_procedure(request):
 
         update = recipes(recipe_id=f.recipe_id_id,recipe_isProcedure=1)
         update.save(update_fields=["recipe_isProcedure"])
-        return redirect("/view_recipe/",{'inserted': True})
+        return redirect("/nutritionist/view_recipe/",{'inserted': True})
     return render(request, "add_procedure.html" )
 
 
@@ -91,11 +94,9 @@ def delete(request):
     try:
         deleteUser=recipes.objects.get(recipe_id=recipeId)
         deleteUser.delete()
-        return redirect("/view_recipe/")
+        return redirect("/nutritionist/view_recipe/")
     except:
         pass
-
-
 
 def edit_recipe(request):
     editdata = category.objects.all()
@@ -115,7 +116,7 @@ def edit_recipe(request):
         image=recipeimage
         update = recipes(recipe_id=edit_id, category_id_id=category_id,recipe_name=name, recipe_description=description,recipe_image=image)
         update.save(update_fields=["category_id_id","recipe_name","recipe_description","recipe_image"])
-        return redirect("/view_recipe/")
+        return redirect("/nutritionist/view_recipe/")
     return render(request,"edit.html", {'vt':get_data,'ed':editdata})
 
 
@@ -145,6 +146,60 @@ def edit_procedure(request):
             procedure_notes=notes
         )
         update.save(update_fields=["recipe_name","procedure_discription","prep_time","cook_time","total_time","procedure_ingredients","procedure_instructions","procedure_notes"])
-        return redirect("/view_recipe/")
+        return redirect("/nutritionist/view_recipe/")
     return render(request,"edit_procedure.html",{'gd':get_data})
+
+def change_password(request):
+
+    emailid = request.session["emailid"]
+
+    if(request.method=="POST"):
+
+
+        opassword=request.POST['old_password']
+        npassword=request.POST['new_password']
+        confpass=request.POST['confirm_password']
+        new_otp=request.POST['otp']
+        userdata = MySite_User.objects.get(user_email=emailid)
+        otp_db = userdata.otp
+        if (otp_db == new_otp):
+
+
+            if (npassword==confpass):
+
+                dbpass=userdata.user_password
+
+                if(dbpass==opassword):
+
+                        updatedata=MySite_User(
+                        user_email=emailid,
+                        user_password=npassword
+                        )
+                        updatedata.save(update_fields=["user_password"])
+
+                        try:
+                            os.email(emailid,"confirmation mail","password changed successfully")
+                            return redirect("/nutritionist/nutri_index/")
+                        except:
+                            return HttpResponse("<h1>Email sending failed</h1>")
+
+                else:
+                    return render(request,"change_password.html",{'op':"wrong old password"})
+
+            else:
+                return render(request,"change_password.html",{'password':"password did not match"})
+        else:
+            return render(request, "page_not_found.html", {'otp': "wrong otp"})
+    else:
+        otp_gen,otptime = og.otpgenerate()
+        updatedata = MySite_User(
+            user_email=emailid,
+            otp=otp_gen,
+            otp_time=otptime
+        )
+        updatedata.save(update_fields=["otp","otp_time"])
+        os.otpsend(otp_gen, emailid, "new Otp", "do not share")
+
+    return render(request,"change_password.html")
+
 

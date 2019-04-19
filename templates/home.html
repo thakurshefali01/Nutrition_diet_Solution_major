@@ -4,6 +4,16 @@ Home
 {% endblock %}
 
 {% block content %}
+    {% if login %}
+                <script>alert('Welcome');</script>
+    {% endif %}
+    {% if sign_up%}
+                <script>alert('Successfully signed up');</script>
+    {% endif %}
+    {% if pu %}
+                <script>alert('password updated successfully');</script>
+    {% endif %}
+<div>
 <section class="home-slider owl-carousel">
       <div class="slider-item">
         <div class="container">
@@ -266,7 +276,7 @@ Home
     	</div>
     </section>
 
-
+</div>
 
 
 

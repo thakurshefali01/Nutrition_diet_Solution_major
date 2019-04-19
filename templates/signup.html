@@ -20,31 +20,36 @@
              {% if inserted %}
             <script>alert('Sucessfully registered');</script>
             {% endif %}
+            {% if wp %}
+            <script>alert('password did not match');</script>
+            {% endif %}
+
 
             <select name="role_id" class="dropdown" >
                 <option value="3">user</option>
                 <option value="2">Nutritionist</option>
+                <option value="4">Fitness Trainer</option>
             </select>
             <div class="inputBox">
                 <input type="text" name="user_name" required="">
                 <label for="user_name">Name</label>
             </div>
             <div class="inputBox">
-                <input type="text" name="user_email" required="">
+                <input type="text" name="user_email" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                 <label for="user_email">Email</label>
             </div>
 
             <div class="inputBox">
-                <input type="text" name="user_mobile" required="">
+                <input type="text" name="user_mobile" required="" pattern="^\d{10}$">
                 <label for="user_mobile">Contact number</label>
             </div>
             <div class="inputBox">
-                <input type="password" name="user_password" required="">
+                <input type="password" name="user_password"   required="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
                 <label for="user_password">Password</label>
             </div>
 
             <div class="inputBox">
-                <input type="password" name="" required="">
+                <input type="password" name="confirm_password"  required="" >
                 <label>Confirm Password</label>
             </div>
             <input type="submit" name="" value="Sign Up">

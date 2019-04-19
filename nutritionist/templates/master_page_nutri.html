@@ -115,26 +115,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
 				</a>
 				<ul>
-					<li>
-						<a class="subnav-text" href="gallery.html">
-							Image Gallery
+
+
+                    <li>
+						<a class="subnav-text" href="{% url 'nutritionist:change_password' %}">
+							change password
 						</a>
 					</li>
-					<li>
-						<a class="subnav-text" href="calendar.html">
-							Calendar
-						</a>
-					</li>
-					<li>
-						<a class="subnav-text" href="{% url 'admin_panel:signup_admin' %}">
-							Sign Up Page
-						</a>
-					</li>
-					<li>
-						<a class="subnav-text" href="{% url 'admin_panel:login_admin' %}">
-							Login Page
-						</a>
-					</li>
+
                     <li>
                         <a  class="subnav-text" href="{% url 'nutritionist:add_recipe' %}">
                         Add recipe
@@ -142,7 +130,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			        </li>
                     <li>
                         <a  class="subnav-text" href="{% url 'nutritionist:view_recipe' %}">
-                        View recipe added
+                        View added recipe
                         </a>
 			        </li>
 				</ul>

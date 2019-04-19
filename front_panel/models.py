@@ -17,7 +17,11 @@ class MySite_User(models.Model):
     user_image=models.CharField(max_length=255,null=True)
     user_isavailable=models.BooleanField(default=True)
     user_isqueue=models.BooleanField(default=False)
-    user_lastlogin=models.CharField(max_length=255,default="")
+    user_sign_up=models.CharField(max_length=255,default="")
+    otp=models.CharField(max_length=255,default="",null=True)
+    otp_time=models.CharField(max_length=255,default="",null=True)
+    user_token=models.CharField(max_length=255,default="")
+    is_verified = models.BooleanField(default=False)
 
 class Login_details(models.Model):
     login_id = models.AutoField(primary_key=True)

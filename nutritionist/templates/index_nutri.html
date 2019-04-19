@@ -3,6 +3,9 @@
 nutritionist panel
 {% endblock %}
 {% block content %}
+    {% if login %}
+                <script>alert('Welcome to Nutritionist Panel');</script>
+    {% endif %}
 		<div class="main-grid">
 
 			<div class="social grid">

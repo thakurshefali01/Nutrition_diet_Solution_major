@@ -22,7 +22,8 @@ from django.conf.urls.static import  static
 urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'^',include('front_panel.urls')),
-    url(r'^',include('admin_panel.urls')),
-    url(r'^',include('nutritionist.urls'))
+    url(r'^admin_panel/',include('admin_panel.urls')),
+    url(r'^nutritionist/', include('nutritionist.urls')),
+    url(r'^fitness_panel/', include('Fitness_panel.urls'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -13,7 +13,9 @@ urlpatterns=[
         url(r'^signup/$',views.signup,name="signup"),
         url(r'^logout/$',views.logout,name="logout"),
         url(r'^error/$',views.pagenotfound,name="error"),
-        url(r'^change_password/$',views.change_password,name="change_password")
+        url(r'^forgot_password/$',views.forgot_password,name="forgot_password"),
+        url(r'^click-to_verify_account/$',views.verify,name="verify_link")
+
 
 
 ]

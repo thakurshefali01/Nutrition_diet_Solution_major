@@ -1,5 +1,5 @@
 from django import forms
-from front_panel.models import MySite_User,User_role
+from front_panel.models import MySite_User,User_role,Login_details
 
 class User_roleForm(forms.ModelForm):
     class Meta():
@@ -24,7 +24,20 @@ class MySite_UserForm(forms.ModelForm):
             "user_image",
             "user_isavailable",
             "user_isqueue",
-            "role_id"
+            "user_sign_up",
+            "role_id",
+            "otp",
+            "otp_time",
+            "is_verified"
         ]
 
+class Login_detailsForm(forms.ModelForm):
+    class Meta():
+        model= Login_details
+        exclude=[
+            "login_id",
+            "login_time",
+            "logout_time",
+            "user_name"
+        ]
 

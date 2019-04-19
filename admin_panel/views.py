@@ -1,13 +1,14 @@
 from django.shortcuts import render,redirect
 from admin_panel.forms import signup_AdminForm
-from admin_panel.models import signup_Admin
 from django.core.files.storage import FileSystemStorage
-import authorize as au
+from miscellaneous import authorize as au
+
+
 # Create your views here.
 
 def admin_index(request):
-    auth = au.authorizeuser(request.session["authenticated"], request.session["emailid"], request.session["roleid"], )
-    if (auth):
+    auth = au.authorizeuser(request.session["authenticated"], request.session["roleid"],1 )
+    if (auth==True):
         return render(request, "index_admin.html")
     else:
         aut,message=auth
