@@ -4,6 +4,9 @@ Home
 {% endblock %}
 
 {% block content %}
+    {% if wp %}
+                <script>alert('Wrong password');</script>
+    {% endif %}
     {% if login %}
                 <script>alert('Welcome');</script>
     {% endif %}

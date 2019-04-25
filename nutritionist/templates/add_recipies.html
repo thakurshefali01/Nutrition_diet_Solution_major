@@ -16,7 +16,10 @@ Add Recipe
                     {% if inserted %}
                     <script>alert('data inserted');</script>
                     {% endif %}
-                    <select name="recipe_category" >
+                    <div class="add_recipe-select">
+                    <label for="recipe_category" >Select category</label>
+
+                        <select name="recipe_category" class="styled-select blue rounded" >
                         <option value="0">Select</option>
                         {% if ud %}
                         {% for i in ud %}
@@ -26,9 +29,11 @@ Add Recipe
                         <option>No Category Found</option>
                         {% endif %}
                     </select>
-					<input type="text" name="recipe_name" value="recipe name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe name';}">
-					<input type="text" name="recipe_description" value="recipe description" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe description';}">
-                    <input type="file" name="recipe_image" value="recipe image" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe image';}">
+                    </div>
+					<input type="text" name="recipe_name" value="Recipe name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe name';}">
+					<input type="text" name="recipe_description" value="Recipe description" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe description';}">
+
+                    <label for="recipe_image" style="text-align:left; margin-top: 20px;">Select image</label><input type="file" name="recipe_image" value="Recipe image"   onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe image';}">
                     <input type="submit" class="register" value="Add recipe">
 				</form>
 				<a href="{% url 'nutritionist:nutri_index' %}">Back To Home</a>

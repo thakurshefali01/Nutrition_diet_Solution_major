@@ -3626,7 +3626,7 @@ button.note-color-btn {
 }
 body.signup-body {
     overflow: auto !important;
-	background:url(../images/s1.jpg) no-repeat 0px 0px;
+	background:url(../images/img10.jpg) no-repeat 0px 0px;
 	background-size:cover;
 }
 .signup-heading h2{
@@ -3636,6 +3636,9 @@ body.signup-body {
 .content2 form{
 	margin-bottom:1em;
 }
+
+
+
 .content2 a{
 	color: #000000;
     font-size: 1em;
@@ -3645,7 +3648,21 @@ body.signup-body {
 .content2 a:hover{
 	color: #00bcd4;
 }
+
 /*-- //sign-up --*/
+
+/*-- add_recipe --*/
+.add_recipe-select .styled-select {
+
+	background-color:#00bcd4;
+            color:white;
+            width:220px;
+			height:35px;
+			margin-top:20px;
+            margin-left:15px;
+}
+/*-- //add_recipe--*/
+
 /*-- login --*/
 .signin-text {
     width: 90%;

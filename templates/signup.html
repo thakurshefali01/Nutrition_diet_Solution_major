@@ -24,12 +24,13 @@
             <script>alert('password did not match');</script>
             {% endif %}
 
-
-            <select name="role_id" class="dropdown" >
-                <option value="3">user</option>
+            <label for="role_id" class="sign_up_as">Sign up as</label>
+            <select name="role_id" class="styled-select blue rounded" >
+                <option value="3">User</option>
                 <option value="2">Nutritionist</option>
                 <option value="4">Fitness Trainer</option>
             </select>
+
             <div class="inputBox">
                 <input type="text" name="user_name" required="">
                 <label for="user_name">Name</label>

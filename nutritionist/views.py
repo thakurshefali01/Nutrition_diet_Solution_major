@@ -6,6 +6,7 @@ from nutritionist.forms import recipesForm ,recipe_procedure_tbForm
 from nutritionist.models import category,recipes,recipe_procedure_tb
 from front_panel.models import MySite_User
 import smtplib
+from django.contrib.auth.hashers import  make_password, check_password
 from datetime import datetime
 
 def index_nutri(request):
@@ -168,12 +169,12 @@ def change_password(request):
             if (npassword==confpass):
 
                 dbpass=userdata.user_password
-
-                if(dbpass==opassword):
+                auth_pass=check_password(opassword,dbpass)
+                if(auth_pass==True):
 
                         updatedata=MySite_User(
                         user_email=emailid,
-                        user_password=npassword
+                        user_password=make_password(npassword)
                         )
                         updatedata.save(update_fields=["user_password"])
 
@@ -181,15 +182,15 @@ def change_password(request):
                             os.email(emailid,"confirmation mail","password changed successfully")
                             return redirect("/nutritionist/nutri_index/")
                         except:
-                            return HttpResponse("<h1>Email sending failed</h1>")
+                            return render(request,"change_password.html",{'email':True})
 
                 else:
-                    return render(request,"change_password.html",{'op':"wrong old password"})
+                    return render(request,"change_password.html",{'op':True})
 
             else:
-                return render(request,"change_password.html",{'password':"password did not match"})
+                return render(request,"change_password.html",{'password':True})
         else:
-            return render(request, "page_not_found.html", {'otp': "wrong otp"})
+            return render(request, "change_password.html", {'w_otp': True})
     else:
         otp_gen,otptime = og.otpgenerate()
         updatedata = MySite_User(

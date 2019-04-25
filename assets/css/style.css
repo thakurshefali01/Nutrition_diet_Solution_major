@@ -9571,6 +9571,22 @@ textarea.form-control {
 
                     }
 
+.signup_box .sign_up_as{
+
+            padding:10px 0;
+            font-size:16px;
+            color:grey;
+
+}
+.signup_box .styled-select {
+
+            background-color:#00bcd4;
+            color:white;
+            width:220px;height:35px;
+            margin-bottom:20px;
+            margin-left:15px;
+
+}
 .signup_box .inputBox label{
             position: absolute;
             top:0;
@@ -9724,7 +9740,9 @@ textarea.form-control {
 /* forgot password */
 
 
-.forgot_password {
+.forgot_password_body {
+      margin:0;
+      padding:0;
      background:url('/assets/images/forgot_password.jpg');
      background-repeat:no-repeat ;
      background-size:100%;
@@ -9733,12 +9751,12 @@ textarea.form-control {
       opacity:0.7;
        }
 
-.forgot_password form{
+.forgot_password_box{
     text-align: center;
     position:absolute;
     background: rgba(255, 255, 255, 0.8);
     margin-top:200px;
-    margin-left:500px;
+    margin-left:600px;
     border:2px solid black;
     padding:30px;
     border-radius:10px;
@@ -9747,9 +9765,39 @@ textarea.form-control {
     color:black;
     }
 
-.forgot_password h3{
+.forgot_password_box h3{
   color:darkorange;
 }
+.forgot_password_box .inputBox {
+
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: grey;
+
+
+ }
+
+.forgot_password_box .inputBox input[type = "text"]{
+        width:80%;
+        font-size: 16px;
+        color:grey;
+
+}
+
+.static-value{
+
+	left:10px;
+	font-weight:bold;
+	font-size:0.8em;
+	color:#444;
+	top:9px;
+}
+
+
+
+
 
 
 

@@ -14,7 +14,7 @@ urlpatterns=[
         url(r'^logout/$',views.logout,name="logout"),
         url(r'^error/$',views.pagenotfound,name="error"),
         url(r'^forgot_password/$',views.forgot_password,name="forgot_password"),
-        url(r'^click-to_verify_account/$',views.verify,name="verify_link")
+        url(r'^clicktoverifyyouraccount?/$',views.verify,name="verify_link")
 
 
 

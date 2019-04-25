@@ -1,10 +1,11 @@
 from django.shortcuts import render,HttpResponse,redirect
 from front_panel.forms import MySite_UserForm,Login_detailsForm
 from front_panel.models import MySite_User,Login_details
-from nutritionist.models import recipe_procedure_tb,recipes
+from nutritionist.models import recipe_procedure_tb,recipes,category
 from datetime import datetime
 from miscellaneous import otp_generate as og, otp_send as os
 import random
+from django.contrib.auth.hashers import make_password,check_password
 # Create your views here.
 
 
@@ -17,10 +18,22 @@ def index(request):
                 userdata = MySite_User.objects.get(user_email=useremail)
                 dp = userdata.user_password
                 uname = userdata.user_name
+                mob=str(userdata.user_mobile)
                 verified = userdata.is_verified
-                token=userdata.user_token
+                authtoken=userdata.user_token
+                auth_pass=check_password(userpassword,dp)
+                if(auth_pass==True):
+                    if verified== False and authtoken=="":
+                        rn = random.randint(100000,10000000)
+                        token= useremail[0:5] + str(rn)+mob[5:10]
+                        verify = "http://127.0.0.1:8000/clicktoverifyyouraccount?email="+useremail+"&token="+token
+                        os.email(useremail, "verification link", verify)
+                        update =MySite_User(user_email=useremail, user_token= token)
+                        update.save(update_fields=["user_token"])
+                        return render(request,"home.html",{'login': True,'v1':True})
 
-                if(dp == userpassword):
+
+                    elif verified ==True:
                             userroleid = userdata.role_id_id
                             request.session['authenticated'] = True
                             request.session['emailid'] = useremail
@@ -33,6 +46,11 @@ def index(request):
                                 f.user_name = email
                                 f.login_time = str(datetime.now())
                                 f.save()
+                            log_id_data=Login_details.objects.filter(user_name=email).order_by('-login_id')[0:1]
+                            lgid=0
+                            for i in log_id_data:
+                                lgid=i.login_id
+                            request.session['login_id']=lgid
                             if(userroleid == 1):
                                 return redirect("/admin_panel/admin_index")
                             elif (userroleid == 2):
@@ -41,20 +59,43 @@ def index(request):
                                 return redirect("/")
                             elif (userroleid == 4):
                                 return redirect("/fitness_panel/index_fitness")
+
+                else:
+                    return render(request,"home.html",{'wrong_pass':True})
             except:
                 return render(request,"page_not_found.html")
 
         return render(request, "home.html")
 
+def verify(request):
+    try:
+
+        email = request.GET['email']
+        token = request.GET['token']
+        userdata=MySite_User.objects.get(user_email=email)
+        user_verify=userdata.is_verified
+        if(user_verify == True):
+            return render(request,"home.html",{"verified":True})
+        else:
+            dbtoken=userdata.user_token
+            if(dbtoken==token):
+                verified=True
+                update=MySite_User(user_email=email,is_verified=verified,user_token="")
+                update.save(update_fields=["is_verified","user_token"])
+                return redirect("/")
+            else:
+                return redirect("/error/")
+    except:
+        return render (request,"home.html",{"valid":True})
+
 def logout(request):
 
-    email = request.session['emailid']
+    log_id=request.session['login_id']
     log_obj = Login_detailsForm(request.POST)
     if log_obj.is_valid():
-        data=Login_details.objects.get(user_name=email)
-        logid=data.login_id
+        data=Login_details.objects.get(login_id=log_id)
         updatedata=Login_details(
-            log_id=logid,
+            login_id=log_id,
             logout_time=str(datetime.now())
 
         )
@@ -70,7 +111,7 @@ def signup(request):
         enter_password=request.POST['user_password']
         conf_password=request.POST['confirm_password']
         if(enter_password==conf_password):
-            password=conf_password
+            password=make_password(conf_password)
         else:
             return render(request,"signup.html",{'wp':True})
         f = signupobj.save(commit=False)
@@ -84,7 +125,7 @@ def signup(request):
         rn = random.randint(100000,10000000)
         token = request.POST['user_email'][0:5]+str(rn)+str(request.POST['user_mobile'][5:10])
         f.user_token=token
-        verify ="http://127.0.0.1:8000/clicktoverifyyouraccount?email="+request.POST['user_name']+"&token="+token
+        verify ="http://127.0.0.1:8000/clicktoverifyyouraccount?email="+request.POST['user_email']+"&token="+token
         os.email(f.user_email,"verification link",verify)
         f.save()
 
@@ -118,7 +159,7 @@ def forgot_password(request):
                     if(new_password==conf_password):
                         updatetable=MySite_User(
                             user_email=email,
-                            user_password=conf_password
+                            user_password=make_password(conf_password)
                         )
                         updatetable.save(update_fields=["user_password"])
                         os.email(email,"password changed","your password changed successfully")
@@ -132,44 +173,11 @@ def forgot_password(request):
     return render(request,"forgot_password.html",{'cp':True})
 
 
-def verify(request):
-    try:
-
-        email = request.session['emailid']
-        token = request.GET['token']
-        userdata=MySite_User.objects.get(user_email=email)
-        user_verify=userdata.is_verified
-        if(user_verify == True):
-            return render(request,"home.html",{"verified":True})
-        else:
-            dbtoken=userdata.user_token
-            if(dbtoken==token):
-                verified=True
-                update=MySite_User(user_email=email,is_verified=verified,user_token="")
-                update.save(update_fields=["is_verified","user_token"])
-                return render(request, "home.html", {"good": True})
-            else:
-                return redirect("/error/")
-    except:
-        return render (request,"contact.html",{"valid":True})
-
-
-def verify_link(request):
-    try:
-        email = request.GET['emailid']
-        token = request.GET['token']
-        data= MySite_User.objects.get(user_email=email)
-        dbtoken=data.user_token
-        if(dbtoken== token):
-            return redirect("/success_verify/")
-        else:
-            return redirect('/invalidtoken/')
-    except:
-        return redirect("/error/")
-
 def recipes_page(request):
     recipe_data = recipes.objects.all()
-    return render(request, "recipes.html",{'rd':recipe_data})
+    cat_data=category.objects.all()
+
+    return render(request, "recipes.html",{'rd':recipe_data,'cd':cat_data})
 
 
 
