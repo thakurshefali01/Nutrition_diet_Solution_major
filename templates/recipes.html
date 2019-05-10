@@ -4,6 +4,10 @@ Recipes
 {% endblock title %}
 {% block content %}
 
+{% if login %}
+<script>alert("Please login to add recipe to cart");</script>
+{% endif %}
+
 <section class="hero-wrap hero-wrap-2" style="background-image: url('/assets/images/rbg_1.jpg');">
       <div class="overlay"></div>
       <div class="container">
@@ -21,22 +25,25 @@ Recipes
     	<div class="container">
         <div class="row">
         	<div class="col-lg-9">
-		<div>
-			<h1>heading</h1>
-				</div>
+
 			<div class="row">
 
                 {% if rd %}
 				{% for j in cd %}
+				<div class="col-md-12">
+				<h1 style>{{j.category_name}}</h1>
+					</div>
                       {% for i in rd %}
 					{% if j.category_id == i.category_id_id %}
         			<div class="col-md-4 ftco-animate">
                         <div class="blog-entry">
-								<label>{{ i.category_id.category_name}}</label>
+
 		    					<a href="single.html" class="img-2"><img src="/media/{{ i.recipe_image }}" class="img-fluid" alt="Colorlib Template"></a>
 			    				<div class="text pt-3">
 	    							<h3><a href="single.html">{{ i.recipe_name }}</a></h3>
-	    							<p class="mb-0"><a href="#" class="btn btn-black py-2">Read More <span class="icon-arrow_forward ml-4"></span></a></p>
+									<p style="text-align:justify">{{i.recipe_description}}</p>
+									<h3>₹{{i.recipe_price}}</h3>
+	    							<p class="mb-0"><a href= "{% url 'front_panel:cart' %}?id={{i.recipe_id}}">Add to Cart<i class="fa fa-shopping-cart" style="padding-left:10px;"></i></a></p>
                                 </div>
 		    				</div>
     					</div>
@@ -47,6 +54,9 @@ Recipes
                      <h1> no data found </h1>
 				{% endif %}
 
+{% if hello %}
+				<script>alert("yo");</script>
+				{% endif %}
 
         		</div>
 

@@ -12,5 +12,4 @@ urlpatterns=[
     url(r'^delete/$',views.delete,name="delete"),
     url(r'^edit_recipe/$',views.edit_recipe,name="edit_recipe"),
     url(r'^edit_procedure/$',views.edit_procedure,name="edit_procedure"),
-    url(r'^change_password/$',views.change_password,name="change_password")
-]
+   ]

@@ -1,22 +1,22 @@
-{% extends 'master_page_nutri.html' %}
+{% extends 'masterpage.html' %}
 {% block title %}
 Recipe Procedure
 {% endblock title %}
 {% block content %}
 
 
-<div class="procedure-body">
+<div class="procedure-body" >
 {% if pd %}
  {% for i in pd %}
 		<div class="agile-procedure">
 
-			<div class="content2">
+			<div class="content2" >
 
-				<div class="grids-heading gallery-heading signup-heading">
+				<div class="grids-heading gallery-heading signup-heading" >
 					<h2>{{ i.recipe_name }}</h2>
 				</div>
-
-                <h2>PROCEDURE</h2>
+                <div style="padding:20px;text-align:justify; margin:10px 10px 10px 10px;">
+                <h2 class="text-center" >PROCEDURE</h2>
                 <p>{{ i.procedure_discription }}</p>
                 <div class="spacer"></div>
                         <div class="table-responsive">
@@ -39,21 +39,22 @@ Recipe Procedure
                             </table>
                         </div>
 
-                        <h2>INGRIDENTS</h2>
+                        <h2 class="text-center">INGRIDENTS</h2>
                             <ul>
                                 <li>{{ i.procedure_ingredients }}</li>
                             </ul>
-                        <h2>INSTRUCTIONS</h2>
+                        <h2 class="text-center">INSTRUCTIONS</h2>
                             <ul>
                                 <li>{{ i.procedure_instructions }}</li>
                             </ul>
-                        <h2>NOTE</h2>
+                        <h2 class="text-center">NOTE</h2>
                             <ul>
                                 <li>{{ i.procedure_notes }}</li>
                             </ul>
-
-                <a href="{% url 'nutritionist:edit_procedure' %}?id={{ i.procedure_id }}" ><button type="button" class="btn btn-dark">Edit Procedure</button></a>
-
+                </div>
+                <div class="text-center">
+                <a href="{% url 'nutritionist:edit_procedure' %}?id={{ i.procedure_id }}" ><button type="button" class="btn btn-dark " >Edit Procedure</button></a>
+                </div>
             </div>
 
 

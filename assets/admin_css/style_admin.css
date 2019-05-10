@@ -3462,6 +3462,7 @@ button.note-color-btn {
 .agile-gallery{
     position: relative;
     overflow: hidden;
+    max-height:500px;
     text-align: center;
     border: solid 5px #fff;
 	margin: 30px;
@@ -3476,31 +3477,40 @@ button.note-color-btn {
     position: absolute;
     left: 0;
     bottom: -105%;
+
     text-align: center;
     width: 100%;
-    height: 213px;
+    height: 100%;
     -webkit-transition: .5s all;
     transition: .5s all;
     -moz-transition: .5s all;
 }
 .agile-gallery:hover .agileits-caption {
-    bottom: 0%;
-	overflow-y:scroll;
-
+    bottom: 0;
 }
 .agileits-caption h4{
     color: #FFFFFF;
+    font-size: 2.5em;
+    margin: 1.5em 0 .5em 0;
+    margin:20px;
+}
+
+.agileits-caption h3{
+    color: #FFFFFF;
     font-size: 1.5em;
     margin: 1.5em 0 .5em 0;
+    margin:20px;
 }
+
 .agileits-caption p{
     color: #FFFFFF;
     font-size: 1em;
-    margin: 0;
-    line-height: 1.8em;	
+
+    line-height: 1.8em;
+    margin:20px;
 }
 .agileits-caption a{
-	margin:10px;
+	margin:20px;
 
 }
 /*-- //gallery --*/
@@ -3536,12 +3546,12 @@ button.note-color-btn {
 /*-- sign-up --*/
 .content2 {
     width: 40%;
-    text-align: center;
     background-color: rgb(255, 255, 255);
     padding: 0 0 30px 0;
     border-radius: 0px;
     margin: 0 auto;
     border: 10px solid #d8d8d8;
+    text-align:center;
 }
 .content2 input[type="text"] {
     padding: 10px;
@@ -3583,6 +3593,29 @@ button.note-color-btn {
 	font-size:1em;
 	margin-top:4%;
 }
+.edit-procedure{
+text-align:left;
+}
+.edit-procedure label{
+width:23%;
+}
+
+.change-password{
+text-align:left;
+}
+
+.change-password form{
+padding-left:10px;
+padding-right:10px;
+}
+.change-password input[type="password"], .change-password input[type="text"]{
+width:75%;
+}
+
+.change-password label{
+width:23%;
+}
+
 .register {
     padding: 8px;
     background-color: #fcb216;
@@ -3762,7 +3795,6 @@ i.fa.fa-twitter,i.fa.fa-facebook,i.fa.fa-google-plus,i.fa.fa-dribbble{
     text-align: left;
     margin-top: 5%;
 	margin-right:0;
-	margin-left:10px;
 }
 
 .add_procedure input[type="text"]{
@@ -4374,6 +4406,7 @@ div#vmap {
 	}
 	.content2 {
 		width: 60%;
+
 	}
 	.button-states-top-grid {
 		padding: 1em;
@@ -4733,5 +4766,10 @@ div#vmap {
 	button.btn.btn-default {
 		width: 16%;
 	}
+}
+
+.inline-element{
+display:inline-block !important;
+margin-left:15px;
 }
 /*-- //responsive --*/

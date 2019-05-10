@@ -17,6 +17,7 @@ class recipes(models.Model):
     recipe_procedure = models.TextField(default="")
     recipe_isactive = models.BooleanField(default=True)
     recipe_isProcedure = models.BooleanField(default=False)
+    recipe_price=models.CharField(max_length=225, null=True)
 
 
 class recipe_procedure_tb(models.Model):
@@ -31,3 +32,18 @@ class recipe_procedure_tb(models.Model):
     procedure_ingredients = models.TextField(default="")
     procedure_instructions = models.TextField(default="")
     procedure_notes = models.TextField(default="")
+
+
+class ExerciseCategory(models.Model):
+    exercise_id = models.AutoField(primary_key=True)
+    exercise_category = models.CharField(max_length=225, default="", unique=True)
+
+
+class AddExercise(models.Model):
+    exercise_id = models.ForeignKey(ExerciseCategory, on_delete=models.CASCADE, default="")
+    user_email = models.ForeignKey(MySite_User, on_delete=models.CASCADE, default="")
+    add_exercise_id=models.AutoField(primary_key=True)
+    exercise_name=models.CharField(max_length=225, default="")
+    exercise_image=models.CharField(max_length=225,default="")
+    exercise_discription=models.CharField(max_length=225, default="")
+    exercise_price = models.CharField(max_length=225, null=True)

@@ -1,4 +1,4 @@
-{% extends 'master_page_nutri.html' %}
+{% extends 'masterpage.html' %}
 {% block title %}
 Add Recipe
 {% endblock title %}
@@ -32,8 +32,9 @@ Add Recipe
                     </div>
 					<input type="text" name="recipe_name" value="Recipe name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe name';}">
 					<input type="text" name="recipe_description" value="Recipe description" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe description';}">
+                    <input type="text" name="recipe_price" value="Recipe price in rupees" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe price';}">
 
-                    <label for="recipe_image" style="text-align:left; margin-top: 20px;">Select image</label><input type="file" name="recipe_image" value="Recipe image"   onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe image';}">
+                    <label for="recipe_image" style="text-align:left; margin-top: 20px;">Select image</label><input type="file" name="recipe_image" value="Recipe image"  class="inline-element"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Recipe image';}">
                     <input type="submit" class="register" value="Add recipe">
 				</form>
 				<a href="{% url 'nutritionist:nutri_index' %}">Back To Home</a>

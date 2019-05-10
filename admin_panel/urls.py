@@ -5,7 +5,6 @@ app_name='admin_panel'
 
 urlpatterns=[
         url(r'^admin_index/$',views.admin_index,name="admin_index"),
-        url(r'^login_admin/$',views.login_admin,name="login_admin"),
-        url(r'^adminsignup/$',views.signup_admin,name="signup_admin"),
+        url(r'^user_query/$',views.user_query,name="user_query")
 
 ]

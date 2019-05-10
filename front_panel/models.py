@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class User_role (models.Model):
     role_id=models.AutoField(primary_key=True)
@@ -28,3 +29,31 @@ class Login_details(models.Model):
     login_time = models.CharField(max_length=255)
     logout_time = models.CharField(max_length=255)
     user_name = models.CharField(max_length=255)
+
+
+class TemporaryCartTable(models.Model):
+    table_id = models.AutoField(primary_key=True)
+    email = models.CharField(max_length=255, default="", null=True)
+    recipe_id = models.CharField(max_length=255, default="", null=True)
+    recipe_name = models.CharField(max_length=225, default="", null=True)
+    recipe_image = models.CharField(max_length=225, default="", null=True)
+    recipe_description = models.CharField(max_length=225, default="", null=True)
+    recipe_price = models.CharField(max_length=225, null=True)
+
+
+class SaleTable(models.Model):
+    table_id = models.AutoField(primary_key=True)
+    email = models.CharField(max_length=255, default="", null=True)
+    recipe_id = models.CharField(max_length=255, default="", null=True)
+    recipe_name = models.CharField(max_length=225, default="", null=True)
+    recipe_image = models.CharField(max_length=225, default="", null=True)
+    recipe_description = models.CharField(max_length=225, default="", null=True)
+    recipe_price = models.CharField(max_length=225, null=True)
+
+class ContactTable(models.Model):
+    contact_id = models.AutoField(primary_key=True)
+    contact_name = models.CharField(max_length=225, default="")
+    contact_email = models.CharField(max_length=225, default="")
+    contact_subject = models.CharField(max_length=225, default="",null=True)
+    contact_message = models.TextField(default="")
+    contact_time = models.CharField(max_length=225 ,default="")

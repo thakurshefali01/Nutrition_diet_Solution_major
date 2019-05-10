@@ -44,14 +44,12 @@ def add_recipe(request):
             f.recipe_image = recipeimage
             f.recipe_name = request.POST['recipe_name']
             f.recipe_description = request.POST['recipe_description']
+            f.recipe_price = request.POST['recipe_price']
             f.recipe_isactive = 1
             f.category_id_id = request.POST['recipe_category']
             f.user_email_id = request.session['emailid']
             f.save()
         return render(request, "add_recipies.html", {'inserted': True,'ud':userdata})
-
-
-
     return render(request,"add_recipies.html",{'ud':userdata})
 
 
@@ -87,7 +85,7 @@ def view_procedure(request):
 
     r_id=request.GET['id']
     pro_data=recipe_procedure_tb.objects.filter(recipe_id=r_id)
-    return render(request, "view_procedure.html",{'pd':pro_data})
+    return render(request, "view_Exercise_procedure.html",{'pd':pro_data})
 
 
 def delete(request):
@@ -149,58 +147,5 @@ def edit_procedure(request):
         update.save(update_fields=["recipe_name","procedure_discription","prep_time","cook_time","total_time","procedure_ingredients","procedure_instructions","procedure_notes"])
         return redirect("/nutritionist/view_recipe/")
     return render(request,"edit_procedure.html",{'gd':get_data})
-
-def change_password(request):
-
-    emailid = request.session["emailid"]
-
-    if(request.method=="POST"):
-
-
-        opassword=request.POST['old_password']
-        npassword=request.POST['new_password']
-        confpass=request.POST['confirm_password']
-        new_otp=request.POST['otp']
-        userdata = MySite_User.objects.get(user_email=emailid)
-        otp_db = userdata.otp
-        if (otp_db == new_otp):
-
-
-            if (npassword==confpass):
-
-                dbpass=userdata.user_password
-                auth_pass=check_password(opassword,dbpass)
-                if(auth_pass==True):
-
-                        updatedata=MySite_User(
-                        user_email=emailid,
-                        user_password=make_password(npassword)
-                        )
-                        updatedata.save(update_fields=["user_password"])
-
-                        try:
-                            os.email(emailid,"confirmation mail","password changed successfully")
-                            return redirect("/nutritionist/nutri_index/")
-                        except:
-                            return render(request,"change_password.html",{'email':True})
-
-                else:
-                    return render(request,"change_password.html",{'op':True})
-
-            else:
-                return render(request,"change_password.html",{'password':True})
-        else:
-            return render(request, "change_password.html", {'w_otp': True})
-    else:
-        otp_gen,otptime = og.otpgenerate()
-        updatedata = MySite_User(
-            user_email=emailid,
-            otp=otp_gen,
-            otp_time=otptime
-        )
-        updatedata.save(update_fields=["otp","otp_time"])
-        os.otpsend(otp_gen, emailid, "new Otp", "do not share")
-
-    return render(request,"change_password.html")
 
 

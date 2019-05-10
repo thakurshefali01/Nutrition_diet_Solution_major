@@ -8671,9 +8671,12 @@ h1, h2, h3, h4, h5,
     display: block; }
     @media (min-width: 992px) {
       .blog-entry .half {
-        width: 50%; } }
+         } }
     .blog-entry .half .img {
-      height: 380px; }
+      height:280px;
+
+
+       }
     .blog-entry .half h3 {
       font-size: 30px;
       font-weight: 700; }

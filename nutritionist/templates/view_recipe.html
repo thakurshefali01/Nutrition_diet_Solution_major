@@ -1,27 +1,30 @@
-{% extends 'master_page_nutri.html' %}
+{% extends 'masterpage.html' %}
 {% block title %}
 view Recipe
 {% endblock title %}
 {% block content %}
 
-<div class="main-grid">
+<div class="main-grid container-fluid">
 			<div class="agile-grids">
 				<!-- gallery -->
 				<div class="grids-heading gallery-heading">
 					<h2>Recipes</h2>
 				</div>
-                {% if vd %}
-                    {% for i in vd %}
+
 				<div class="gallery-grids">
-						<div class="show-reel">
-							<div class="col-md-3 agile-gallery-grid" >
+						<div class="row">
+
+				{% if vd %}
+                    {% for i in vd %}
+							<div class="col-md-4 agile-gallery-grid">
                                 <div class="agile-gallery">
 									<a href="#" class="lsb-preview" data-lsb-group="header">
 
-										<img src="/media/{{i.recipe_image}}" alt="" />
+										<img class="img-responsive" src="/media/{{i.recipe_image}}" alt="" />
 										<div class="agileits-caption">
 											<h4>{{ i.recipe_name }}</h4>
 											<p>{{ i.recipe_description}}</p>
+											<h3>₹{{i.recipe_price}}</h3>
                                             <a href="{% url 'nutritionist:delete' %}?id={{ i.recipe_id }}" ><button type="button" class="btn btn-danger">Delete</button></a>
                                         <a href="{% url 'nutritionist:edit_recipe' %}?id={{ i.recipe_id }}" ><button type="button" class="btn btn-success">Edit</button></a>
                                             {% if i.recipe_isProcedure == 1 %}
@@ -37,11 +40,12 @@ view Recipe
 								</div>
                             </div>
 
-                        </div>
-                            {% endfor %}
+							{% endfor %}
                             {% else %}
                              <h1> no data found </h1>
                             {% endif %}
+                        </div>
+
 
 
 

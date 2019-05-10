@@ -1,3 +1,5 @@
 from django.contrib import admin
+from nutritionist.models import ExerciseCategory
 
-# Register your models here.
+
+admin.site.register(ExerciseCategory)

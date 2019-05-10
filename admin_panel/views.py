@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from admin_panel.forms import signup_AdminForm
 from django.core.files.storage import FileSystemStorage
 from miscellaneous import authorize as au
-
+from front_panel.models import ContactTable
 
 # Create your views here.
 
@@ -19,30 +19,8 @@ def admin_index(request):
 
 
 
-def signup_admin(request):
-    if (request.method == "POST"):
-        form = signup_AdminForm(request.POST)
-        user_image = None
-        try:
-            if request.FILES['admin_image']:
-                myfile = request.FILES['admin_image']
-                fs = FileSystemStorage()
-                filename = fs.save( myfile.name,myfile)
-                user_image = fs.url(filename)
-                user_image=myfile.name
-        except:
-            pass
-        if form.is_valid():
-            f=form.save(commit=False)
-            f.admin_email = request.POST['admin_email']
-            f.admin_image=user_image
-            f.admin_name= request.POST['admin_name']
-            f.admin_password= request.POST['admin_password']
-            f.admin_mobile= request.POST['admin_mobile']
-            f.save()
-            return render(request,"index_admin.html",{'inserted':True})
-    return render(request, "signup_admin.html")
+def user_query(request):
+    contact_data=ContactTable.objects.all()
+    return render (request,"user_query.html",{'cd':contact_data})
 
-def login_admin(request):
-    return render(request, "login_admin.html")
 

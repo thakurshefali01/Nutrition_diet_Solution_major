@@ -4,6 +4,9 @@ Home
 {% endblock %}
 
 {% block content %}
+{% if authenticated %}
+<script>alert("Login to access");</script>
+{% endif %}
     {% if wp %}
                 <script>alert('Wrong password');</script>
     {% endif %}

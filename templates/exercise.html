@@ -4,6 +4,10 @@ Excersise
 {% endblock title %}
 {% block content %}
 
+
+{% if login %}
+<script>alert("Please login to add exercise to cart");</script>
+{% endif %}
     <section class="hero-wrap hero-wrap-2" style="background-image: url('/assets/images/bg_4.jpg');">
       <div class="overlay"></div>
       <div class="container">
@@ -20,106 +24,47 @@ Excersise
     <section class="ftco-section">
     	<div class="container">
         <div class="row">
-        	<div class="col-lg-9">
+            <div class="col-lg-9">
+
+			{% if ed %}
+				{% for j in ecd %}
+        	<div class="row">
+            <div class="col-lg-9">
+				<h1 style>{{j.exercise_category}}</h1>
+					</div>
+                      {% for i in ed %}
+					{% if j.exercise_id == i.exercise_id_id %}
         		<div class="row">
         			<div class="col-md-6 col-lg-12 ftco-animate">
     						<div class="blog-entry d-lg-flex">
     							<div class="half">
-			    					<a href="{% url 'front_panel:single' %}" class="img d-flex align-items-end" style="background-image: url(/assets/images/image_1.jpg);">
+			    					<img  height="300px" width="500px"  class="img d-flex align-items-end" style="background-image: url(/media/{{ i.exercise_image }}); ">
 			    						<div class="overlay"></div>
-				    				</a>
+
 			    				</div>
-			    				<div class="text px-md-4 px-lg-5 half pt-3">
-	    							<p class="meta d-flex"><span class="pr-3">Dessert</span><span class="ml-auto pl-3">March 01, 2018</span></p>
-	    							<h3><a href="{% url 'front_panel:single' %}">Tasty &amp; Delicious Foods</a></h3>
-	    							<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
-</p>
-	    							<p class="mb-0"><a href="{% url 'front_panel:single' %}" class="btn btn-primary">Read More <span class="icon-arrow_forward ml-4"></span></a></p>
+			    				<div class="text px-md-4 px-lg-5 half">
+	    							<h3><a href="{% url 'front_panel:single' %}">{{ i.exercise_name }}</a></h3>
+	    							<p>{{ i.exercise_discription}}</p>
+									<h3>₹{{i.exercise_price}}</h3>
+	    							<p class="mb-0"><a href="{% url 'front_panel:cart1' %}?id={{i.add_exercise_id}}" class="btn btn-primary">Add to Cart<i class="fa fa-shopping-cart" style="padding-left:10px;"></i></a></p>
 	    						</div>
 		    				</div>
     					</div>
-    					<div class="col-md-6 col-lg-12 ftco-animate">
-    						<div class="blog-entry d-lg-flex">
-    							<div class="half">
-			    					<a href="single.html" class="img d-flex align-items-end" style="background-image: url(/assets/images/image_2.jpg);">
-			    						<div class="overlay"></div>
-				    				</a>
-			    				</div>
-			    				<div class="text px-md-4 px-lg-5 half pt-3">
-	    							<p class="meta d-flex"><span class="pr-3">Dessert</span><span class="ml-auto pl-3">March 01, 2018</span></p>
-	    							<h3><a href="single.html">Tasty &amp; Delicious Foods</a></h3>
-	    							<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
-</p>
-	    							<p class="mb-0"><a href="single.html" class="btn btn-primary">Read More <span class="icon-arrow_forward ml-4"></span></a></p>
-	    						</div>
-		    				</div>
-    					</div>
-    					<div class="col-md-6 col-lg-12 ftco-animate">
-    						<div class="blog-entry d-lg-flex">
-    							<div class="half">
-			    					<a href="single.html" class="img d-flex align-items-end" style="background-image: url(/assets/images/image_3.jpg);">
-			    						<div class="overlay"></div>
-				    				</a>
-			    				</div>
-			    				<div class="text px-md-4 px-lg-5 half pt-3">
-	    							<p class="meta d-flex"><span class="pr-3">Dessert</span><span class="ml-auto pl-3">March 01, 2018</span></p>
-	    							<h3><a href="single.html">Tasty &amp; Delicious Foods</a></h3>
-	    							<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
-</p>
-	    							<p class="mb-0"><a href="single.html" class="btn btn-primary">Read More <span class="icon-arrow_forward ml-4"></span></a></p>
-	    						</div>
-		    				</div>
-    					</div>
-    					<div class="col-md-6 col-lg-12 ftco-animate">
-    						<div class="blog-entry d-lg-flex">
-    							<div class="half">
-			    					<a href="single.html" class="img d-flex align-items-end" style="background-image: url(/assets/images/image_4.jpg);">
-			    						<div class="overlay"></div>
-				    				</a>
-			    				</div>
-			    				<div class="text px-md-4 px-lg-5 half pt-3">
-	    							<p class="meta d-flex"><span class="pr-3">Dessert</span><span class="ml-auto pl-3">March 01, 2018</span></p>
-	    							<h3><a href="single.html">Tasty &amp; Delicious Foods</a></h3>
-	    							<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
-</p>
-	    							<p class="mb-0"><a href="single.html" class="btn btn-primary">Read More <span class="icon-arrow_forward ml-4"></span></a></p>
-	    						</div>
-		    				</div>
-    					</div>
-    					<div class="col-md-6 col-lg-12 ftco-animate">
-    						<div class="blog-entry d-lg-flex">
-    							<div class="half">
-			    					<a href="single.html" class="img d-flex align-items-end" style="background-image: url(/assets/images/image_5.jpg);">
-			    						<div class="overlay"></div>
-				    				</a>
-			    				</div>
-			    				<div class="text px-md-4 px-lg-5 half pt-3">
-	    							<p class="meta d-flex"><span class="pr-3">Dessert</span><span class="ml-auto pl-3">March 01, 2018</span></p>
-	    							<h3><a href="single.html">Tasty &amp; Delicious Foods</a></h3>
-	    							<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
-</p>
-	    							<p class="mb-0"><a href="single.html" class="btn btn-primary">Read More <span class="icon-arrow_forward ml-4"></span></a></p>
-	    						</div>
-		    				</div>
-    					</div>
-    					<div class="col-md-6 col-lg-12 ftco-animate">
-    						<div class="blog-entry d-lg-flex">
-    							<div class="half">
-			    					<a href="single.html" class="img d-flex align-items-end" style="background-image: url(/assets/images/image_6.jpg);">
-			    						<div class="overlay"></div>
-				    				</a>
-			    				</div>
-			    				<div class="text px-md-4 px-lg-5 half pt-3">
-	    							<p class="meta d-flex"><span class="pr-3">Dessert</span><span class="ml-auto pl-3">March 01, 2018</span></p>
-	    							<h3><a href="single.html">Tasty &amp; Delicious Foods</a></h3>
-	    							<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.
-</p>
-	    							<p class="mb-0"><a href="single.html" class="btn btn-primary">Read More <span class="icon-arrow_forward ml-4"></span></a></p>
-	    						</div>
-		    				</div>
-    					</div>
-        		</div>
-        		<div class="row mt-5">
+				</div>
+				{% endif %}
+                    {% endfor %}
+				{% endfor %}
+                     {% else %}
+                     <h1> no data found </h1>
+				{% endif %}
+
+
+
+            </div>
+
+</div>
+
+<div class="row mt-5">
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
@@ -134,25 +79,10 @@ Excersise
 		            </div>
 		          </div>
 		        </div>
-        	</div>
-
-        	<div class="col-lg-3">
+        </div>
+            <div class="col-lg-3">
         		<div class="sidebar-wrap">
-	        		<div class="sidebar-box p-4 about text-center ftco-animate">
-			          <h2 class="heading mb-4">About Me</h2>
-			          <img src="/assets/images/author.jpg" class="img-fluid" alt="Colorlib Template">
-			          <div class="text pt-4">
-			          	<p>Hi! My name is <strong>Cathy Deon</strong>, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-			          </div>
-	        		</div>
-	        		<div class="sidebar-box p-4 ftco-animate">
-	              <form action="#" class="search-form">
-	                <div class="form-group">
-	                  <span class="icon icon-search"></span>
-	                  <input type="text" class="form-control" placeholder="Search">
-	                </div>
-	              </form>
-	            </div>
+
 	            <div class="sidebar-box categories text-center ftco-animate">
 			          <h2 class="heading mb-4">Categories</h2>
 			          <ul class="category-image">
@@ -181,9 +111,10 @@ Excersise
 	        		</div>
             </div>
         	</div>
-        </div>
-    	</div>
+	</div>
+
     </section>
+
 
 		
 

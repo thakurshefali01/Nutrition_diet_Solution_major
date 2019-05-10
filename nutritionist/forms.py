@@ -13,7 +13,8 @@ class recipesForm(forms.ModelForm):
             "recipe_image",
             "recipe_description",
             "recipe_procedure",
-            "recipe_isactive"
+            "recipe_isactive",
+            "recipe_price"
 
         ]
 

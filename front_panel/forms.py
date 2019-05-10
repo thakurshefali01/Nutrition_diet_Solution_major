@@ -1,5 +1,5 @@
 from django import forms
-from front_panel.models import MySite_User,User_role,Login_details
+from front_panel.models import MySite_User,User_role,Login_details, TemporaryCartTable,SaleTable,ContactTable
 
 class User_roleForm(forms.ModelForm):
     class Meta():
@@ -41,3 +41,41 @@ class Login_detailsForm(forms.ModelForm):
             "user_name"
         ]
 
+class TemporaryTableForm(forms.ModelForm):
+    class Meta:
+        model = TemporaryCartTable
+        exclude=[
+            "table_id",
+            "email",
+            "recipe_id",
+            "recipe_name",
+            "recipe_image",
+            "recipe_description",
+            "recipe_price"
+        ]
+
+class SaleTableForm(forms.ModelForm):
+    class Meta:
+        model = SaleTable
+        exclude=[
+            "table_id",
+            "email",
+            "recipe_id",
+            "recipe_name",
+            "recipe_image",
+            "recipe_description",
+            "recipe_price"
+        ]
+
+
+class ContactTableForm(forms.ModelForm):
+    class Meta:
+        model =ContactTable
+        exclude=[
+            "contact_id",
+            "contact_name",
+            "contact_email",
+            "contact_subject",
+            "contact_message",
+            "contact_time"
+        ]

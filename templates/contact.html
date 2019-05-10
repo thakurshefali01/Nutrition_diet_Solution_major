@@ -4,6 +4,10 @@ Contact
 {% endblock title %}
 {% block content %}
 
+{% if query %}
+<script>alert('query sent');</script>
+{% endif%}
+
     <section class="hero-wrap hero-wrap-2" style="background-image: url('/assets/images/bg_6.jpg');">
       <div class="overlay"></div>
       <div class="container">
@@ -20,18 +24,19 @@ Contact
       <div class="container">
         <div class="row block-9">
           <div class="col-md-6 order-md-last d-flex">
-            <form action="#" class="bg-light p-5 contact-form">
+            <form  method="POST" action="#" class="bg-light p-5 contact-form">
+                {% csrf_token %}
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Name">
+                <input type="text" name="name" class="form-control" placeholder="Your Name">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email">
+                <input type="text"  name="email" class="form-control" placeholder="Your Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Subject">
+                <input type="text" name="subject" class="form-control" placeholder="Subject">
               </div>
               <div class="form-group">
-                <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                <textarea  id="" name="message" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
               </div>
               <div class="form-group">
                 <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
@@ -65,7 +70,7 @@ Contact
           			<span class="icon-phone2"></span>
           		</div>
           		<h3 class="mb-4">Contact Number</h3>
-	            <p><a href="tel://1234567920">+ 263872642380</a></p>
+	            <p><a href="tel://1234567920">+91 8894100647</a></p>
 	          </div>
           </div>
           <div class="col-md-3 d-flex">
