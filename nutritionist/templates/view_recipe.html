@@ -27,14 +27,12 @@ view Recipe
 											<h3>₹{{i.recipe_price}}</h3>
                                             <a href="{% url 'nutritionist:delete' %}?id={{ i.recipe_id }}" ><button type="button" class="btn btn-danger">Delete</button></a>
                                         <a href="{% url 'nutritionist:edit_recipe' %}?id={{ i.recipe_id }}" ><button type="button" class="btn btn-success">Edit</button></a>
-                                            {% if i.recipe_isProcedure == 1 %}
+											{% if i.recipe_isProcedure == 1 %}
                                             <h3 style="color:white;">Already Added</h3>
-                                                <a href="{% url 'nutritionist:view_procedure' %}?id={{ i.recipe_id }}" ><button type="button" class="btn btn-dark">View Procedure</button></a>
-
+                                                <a href="{% url 'nutritionist:view_procedure' %}?id={{ i.recipe_id }}"  class="btn btn-dark">View Procedure</a>
                                                 {% else %}
-                                        <a href="{% url 'nutritionist:add_procedure' %}?id={{ i.recipe_id }}" ><button type="button" class="btn btn-dark">Add Procedure</button></a>
-                                            {% endif %}
-
+                                        <a href="{% url 'nutritionist:add_procedure' %}?id={{ i.recipe_id }}"  class="btn btn-dark">Add Procedure</a>
+											{% endif %}
                                         </div>
 									</a>
 								</div>

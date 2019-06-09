@@ -3,8 +3,8 @@ from django.core.files.storage import FileSystemStorage
 from miscellaneous import authorize as au,otp_generate as og,otp_send as os
 
 from nutritionist.forms import recipesForm ,recipe_procedure_tbForm
-from nutritionist.models import category,recipes,recipe_procedure_tb
-from front_panel.models import MySite_User
+from nutritionist.models import category,recipes,recipe_procedure_tb, Procedure_exercise
+from front_panel.models import MySite_User,Login_details
 import smtplib
 from django.contrib.auth.hashers import  make_password, check_password
 from datetime import datetime
@@ -16,7 +16,12 @@ def index_nutri(request):
         return redirect("/notlogin/")
 
     if (auth==True):
-        return render(request, "index_nutri.html")
+        emailid = request.session['emailid']
+        get_data = MySite_User.objects.get(user_email=emailid)
+        active=Login_details.objects.filter(user_name=emailid).count()
+        items_added=recipes.objects.filter(user_email=emailid).count()
+
+        return render(request, "index_nutri.html",{'gd':get_data,'active':active,'ia':items_added})
     else:
         aut, message = auth
         if (message == "Wrong user Type"):
@@ -72,7 +77,7 @@ def add_procedure(request):
 
         update = recipes(recipe_id=f.recipe_id_id,recipe_isProcedure=1)
         update.save(update_fields=["recipe_isProcedure"])
-        return redirect("/nutritionist/view_recipe/",{'inserted': True})
+        return redirect("/nutritionist/view_recipe/")
     return render(request, "add_procedure.html" )
 
 
@@ -82,10 +87,12 @@ def view_recipe(request):
     return render(request,"view_recipe.html",{'vd':view_data})
 
 def view_procedure(request):
-
     r_id=request.GET['id']
     pro_data=recipe_procedure_tb.objects.filter(recipe_id=r_id)
-    return render(request, "view_Exercise_procedure.html",{'pd':pro_data})
+    if len(pro_data) == 0:
+        data = Procedure_exercise.objects.filter(add_exercise_id_id=r_id)
+        return render(request,"view_exercise_procedure.html",{'data':data})
+    return render(request, "view_procedure.html",{'pd':pro_data})
 
 
 def delete(request):

@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse,redirect
-from front_panel.forms import MySite_UserForm,Login_detailsForm, TemporaryTableForm, SaleTableForm,ContactTableForm
-from front_panel.models import MySite_User,Login_details, TemporaryCartTable
+from front_panel.forms import MySite_UserForm,Login_detailsForm, TemporaryTableForm, SaleTableForm,ContactTableForm,payment_tokenForm
+from front_panel.models import MySite_User,Login_details, TemporaryCartTable ,SaleTable,payment_token
 from nutritionist.models import recipe_procedure_tb,recipes,category,ExerciseCategory,AddExercise
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Sum
@@ -9,10 +9,17 @@ from datetime import datetime
 from miscellaneous import authorize as au,otp_generate as og, otp_send as os
 import random
 from django.contrib.auth.hashers import make_password,check_password
-# Create your views here.
 
+from django.shortcuts import render, get_object_or_404
+from paypal.standard.forms import PayPalPaymentsForm
+
+from django.conf import settings
+from django.urls import reverse
+# Create your views here.
+invoice=""
 
 def index(request):
+
         if (request.method == "POST"):
             useremail = request.POST['user_email']
             userpassword = request.POST['user_password']
@@ -25,14 +32,16 @@ def index(request):
                 authtoken=userdata.user_token
                 auth_pass=check_password(userpassword,dp)
                 if(auth_pass==True):
-                    if verified== False and authtoken=="":
-                        rn = random.randint(100000,10000000)
-                        token= useremail[0:5] + str(rn)+mob[5:10]
-                        verify = "http://127.0.0.1:8000/clicktoverifyyouraccount?email="+useremail+"&token="+token
-                        os.email(useremail, "verification link", verify)
-                        update =MySite_User(user_email=useremail, user_token= token)
-                        update.save(update_fields=["user_token"])
-                        return render(request,"home.html",{'login': True,'v1':True})
+                    if verified== False :
+                        if authtoken=="":
+                            rn = random.randint(100000,10000000)
+                            token= useremail[0:5] + str(rn)+mob[5:10]
+                            verify = "http://127.0.0.1:8000/clicktoverifyyouraccount?email="+useremail+"&token="+token
+                            os.email(useremail, "verification link", verify)
+                            update =MySite_User(user_email=useremail, user_token= token)
+                            update.save(update_fields=["user_token"])
+                            return render(request,"home.html",{'ver':True})
+                        return render(request, "home.html", {'login': True})
                     elif verified ==True:
                             userroleid = userdata.role_id_id
                             request.session['authenticated'] = True
@@ -62,9 +71,10 @@ def index(request):
                 else:
                     return render(request,"home.html",{'wrong_pass':True})
             except:
-                return render(request,"page_not_found.html")
-
-        return render(request, "home.html")
+                return render(request,"home.html",{'wrong_user':True})
+        recipe= recipes.objects.all()[0:4]
+        exercise=AddExercise.objects.all()[0:3]
+        return render(request, "home.html",{'recipe':recipe,'exercise':exercise})
 
 
 def verify(request):
@@ -124,7 +134,7 @@ def signup(request):
         verify ="http://127.0.0.1:8000/clicktoverifyyouraccount?email="+request.POST['user_email']+"&token="+token
         os.email(f.user_email,"verification link",verify)
         f.save()
-        return redirect("/",{'sign_up':True})
+        return render(request,"home.html",{'sign_up':True})
     return render(request,"signup.html")
 
 
@@ -245,14 +255,13 @@ def update_profile(request):
     return render(request,"update_profile.html")
 
 def recipes_page(request):
-    data = TemporaryCartTable.objects.all()
-    length = len(data)
     recipe_data = recipes.objects.all()
     cat_data=category.objects.all()
-    return render(request, "recipes.html",{'rd':recipe_data,'cd':cat_data, 'length':length})
+    return render(request, "recipes.html",{'rd':recipe_data,'cd':cat_data})
 
 
 def exercise_page(request):
+
     exercise_data = AddExercise.objects.all()
     ex_cat_data = ExerciseCategory.objects.all()
     return render(request, "exercise.html", {'ed': exercise_data, 'ecd': ex_cat_data})
@@ -262,7 +271,9 @@ def exercise_page(request):
 def user_profile(request):
     emailid = request.session['emailid']
     get_data = MySite_User.objects.get(user_email=emailid)
-    return render(request,"user_profile.html",{'gd':get_data})
+    active=Login_details.objects.filter(user_name=emailid).count()
+    buyed_items=SaleTable.objects.filter(email=emailid).count()
+    return render(request,"user_profile.html",{'gd':get_data,'active':active,'bi':buyed_items})
 
 
 
@@ -271,57 +282,110 @@ def user_profile(request):
 def pagenotfound(request):
     return render(request,"page_not_found.html")
 
-def cart(request):
+
+def cart_temp1(request):
+    get_id = request.GET['id']
     recipe_data = recipes.objects.all()
     cat_data = category.objects.all()
     try:
         if request.session['authenticated'] == True:
             if request.session['roleid'] == 3:
-                get_id = request.GET['id']
-                data = recipes.objects.get(recipe_id=get_id)
-                form = TemporaryTableForm()
-                f = form.save(commit=False)
-                f.email = request.session['emailid']
-                f.recipe_id = get_id
-                f.recipe_name = data.recipe_name
-                f.recipe_image = data.recipe_image
-                f.recipe_description = data.recipe_description
-                f.recipe_price = data.recipe_price
-                f.save()
-                return redirect("/recipes/")
+                temp_data = TemporaryCartTable.objects.filter(recipe_id=get_id)
+                if len(temp_data) == 0:
+                    data = recipes.objects.get(recipe_id=get_id)
+                    form = TemporaryTableForm()
+                    f = form.save(commit=False)
+                    f.email = request.session['emailid']
+                    f.recipe_id = get_id
+                    f.recipe_name = data.recipe_name
+                    f.recipe_image = data.recipe_image
+                    f.recipe_description = data.recipe_description
+                    f.recipe_price = data.recipe_price
+                    f.item_added=1
+                    f.save()
+                    return render(request, "recipes.html", {'rd': recipe_data, 'cd': cat_data,'added':True})
+                else:
+                    return render(request, "recipes.html", {'rd': recipe_data, 'cd': cat_data,'already':True})
+        else:
+            return render(request, "recipes.html", {'rd': recipe_data, 'cd': cat_data, 'login': True})
     except:
         return render(request, "recipes.html", {'rd': recipe_data, 'cd': cat_data, 'login': True})
 
 
-def cart1(request):
+def cart_temp2(request):
+    get_id = request.GET['id']
     exercise_data = AddExercise.objects.all()
     excat_data = ExerciseCategory.objects.all()
     try:
         if request.session['authenticated'] == True:
             if request.session['roleid'] == 3:
-                get_id = request.GET['id']
-                data = AddExercise.objects.get(add_exercise_id=get_id)
-                form = TemporaryTableForm()
-                f = form.save(commit=False)
-                f.email = request.session['emailid']
-                f.recipe_id = get_id
-                f.recipe_name = data.exercise_name
-                f.recipe_image = data.exercise_image
-                f.recipe_description = data.exercise_discription
-                f.recipe_price = data.exercise_price
-                f.save()
-                return redirect("/exercise/")
+                temp_data = TemporaryCartTable.objects.filter(recipe_id=get_id)
+                if len(temp_data) == 0:
+                    data = AddExercise.objects.get(add_exercise_id=get_id)
+                    form = TemporaryTableForm()
+                    f = form.save(commit=False)
+                    f.email = request.session['emailid']
+                    f.recipe_id = get_id
+                    f.recipe_name = data.exercise_name
+                    f.recipe_image = data.exercise_image
+                    f.recipe_description = data.exercise_discription
+                    f.recipe_price = data.exercise_price
+                    f.item_added=1
+                    f.save()
+                    return render(request, "exercise.html", {'ed':exercise_data, 'ecd': excat_data,'added':True})
+                else:
+                    return render(request, "exercise.html", {'ed': exercise_data, 'ecd': excat_data,'already':True})
+        else:
+            return render(request, "exercise.html", {'ed': exercise_data, 'ecd': excat_data, 'login': True})
     except:
-        return render(request, "exercise.html", {'ed':exercise_data, 'ecd': excat_data, 'login': True})
-
+        return render(request, "exercise.html", {'ed': exercise_data, 'ecd': excat_data, 'login': True})
 
 def show_cart(request):
-    if request.session['authenticated'] == True:
-        if request.session['roleid'] == 3:
-            data = TemporaryCartTable.objects.filter(email=request.session['emailid'])
-            total = TemporaryCartTable.objects.filter(email=request.session['emailid']).aggregate(Sum('recipe_price'))
-            return render(request, "show_cart.html", {'data':data, 'total':total})
-    return render(request, "home.html", {'authenticated': True})
+    global invoice
+    rn=random.randint(10000000,100000000)
+    invoice=str(rn)
+    try:
+        if request.session['authenticated'] == True:
+            if request.session['roleid'] == 3:
+                data = TemporaryCartTable.objects.filter(email=request.session['emailid'])
+                total = TemporaryCartTable.objects.filter(email=request.session['emailid']).aggregate(Sum('recipe_price'))
+                return render(request, "show_cart.html", {'data':data, 'total':total,'invoice':invoice})
+    except:
+        return render(request, "home.html", {'authenticate': True})
+
+
+
+def saledata(request):
+    session_mail = request.session['emailid']
+    data = TemporaryCartTable.objects.filter(email=session_mail)
+    token_get=request.GET['token']
+    data_new = payment_token.objects.get(user_email=session_mail, token_pay=token_get)
+    if(data_new.token_pay== token_get and data_new.verify_pay==0):
+        for i in data:
+            form = SaleTableForm()
+            f = form.save(commit=False)
+            f.email = i.email
+            f.table_id = i.table_id
+            f.recipe_name = i.recipe_name
+            f.recipe_image = i.recipe_image
+            f.recipe_description = i.recipe_description
+            f.recipe_price = i.recipe_price
+            f.recipe_id = i.recipe_id
+            f.save()
+        data.delete()
+        update= payment_token(token_id= data_new.token_id, verify_pay=1)
+        update.save(update_fields=['verify_pay'])
+        return render(request,"payment_done.html")
+    else:
+        return render(request,"payment_already_done.html")
+
+
+
+def purchased(request):
+    session_mail=request.session['emailid']
+    data = SaleTable.objects.filter(email=session_mail)
+    return render(request,"purchased.html",{'data':data})
+
 
 def remove_item(request):
     id = request.GET['id']
@@ -348,12 +412,41 @@ def contact(request):
     return render(request, "contact.html")
 
 
+
 def charts(request):
     return render(request,"charts.html")
 
 def about(request):
     return render(request,"about.html")
 
-def single(request):
+def payment_process(request):
+    global invoice
+    token1=str(random.randint(100000,1000000))+str(invoice)
+    total = TemporaryCartTable.objects.filter(email=request.session['emailid']).aggregate(Sum('recipe_price'))
+    form = payment_tokenForm(request.POST)
+    if form.is_valid():
+        f= form.save(commit=False)
+        f.token_pay= token1
+        f.invoice=invoice
+        f.user_email=request.session['emailid']
+        f.save()
+    host = request.get_host()
+    paypal_dict = {
+        'business':settings.PAYPAL_RECEIVER_EMAIL,
+        'amount':total['recipe_price__sum']/70,
+        'item_name':'Item_Name_xyz',
+        'invoice':invoice,
+        'currency_code':'USD',
+        'notify_url':'http://{}{}'.format(host,reverse('paypal-ipn')),
+        'return_url':'http://{}{}?token={}'.format(host,reverse('payment_done'),token1),
 
-    return render(request,"single.html")
+    }
+    form = PayPalPaymentsForm(initial = paypal_dict)
+    return render(request,'payment_process.html',{'form': form})
+
+
+def bmi(request):
+    return render(request,"bmi.html")
+
+def already(request):
+    return render(request,"payment_already_done.html")

@@ -1,0 +1,45 @@
+{% extends 'masterpage.html' %}
+{% block title %}
+Add Exercise
+{% endblock title %}
+{% block content %}
+<div class="signup-body">
+		<div class="agile-signup">
+
+			<div class="content2">
+				<div class="grids-heading gallery-heading signup-heading">
+					<h2>Add Exercise</h2>
+				</div>
+				<form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ dict.as_p }}
+                    {% if inserted %}
+                    <script>alert('data inserted');</script>
+                    {% endif %}
+                    <div class="add_recipe-select">
+                    <label for="Exercise _category" >Select category</label>
+
+                        <select name="Exercise_category" class="styled-select blue rounded" >
+                        <option value="0">Select</option>
+                        {% if ud %}
+                        {% for i in ud %}
+                        <option value="{{ i.exercise_id }}">{{ i.exercise_category }}</option>
+                        {% endfor %}
+                        {% else %}
+                        <option>No Category Found</option>
+                        {% endif %}
+                    </select>
+                    </div>
+					<input type="text" name="Exercise_name" value="Exercise name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Exercise name';}">
+					<input type="text" name="Exercise_discription" value="Exercise description" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Exercise  description';}">
+                    <input type="text" name="Exercise_price" value="Exercise price in rupees" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Exercise  price';}">
+
+                    <label style="text-align:left; margin-top: 20px;">Select image</label><input type="file" name="Exercise_image" value="Exercise  image"  class="inline-element" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Exercise  image';}">
+                    <input type="submit" class="register" value="Add Exercise">
+				</form>
+				<a href="{% url 'Fitness_panel:index_fitness' %}">Back To Home</a>
+			</div>
+        </div>
+</div>
+
+{% endblock content %}

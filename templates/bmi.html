@@ -1,0 +1,83 @@
+{% extends 'index.html' %}
+{% block title %}
+BMI
+{% endblock title %}
+{% block content %}
+<section class="hero-wrap hero-wrap-2" style="background-image: url('/assets/images/bg_11.jpg');">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate pb-5 text-center">
+            <h1 class="mb-3 bread">Body Mass Index </h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>BMI<i class="ion-ios-arrow-forward"></i></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<div >
+    <div class="container">
+    <div class="col-md-12 heading-section ftco-animate text-center ">
+		            <h2 class="mb-4"><span>About BMI</span></h2>
+    </div>
+
+    <p style="text-align:center; font-size:20px;">Body mass index, or BMI, is a measure of body size.
+        It combines a person's weight with their height.
+        The results of a BMI measurement can give an idea
+        about whether a person has the correct weight for their height.</p>
+        </div>
+    <div class="col-md-12 heading-section ftco-animate  text-center">
+		            <h2 class="mb-4"><span>Calculate Your BMI</span></h2>
+    </div>
+    <form name="bmiForm" class="text-light" method="POST" name="form1" id="para" >
+   <div class="login-form col-sm-4 offset-sm-4 para" >
+      <div class="form-row">
+   <div class="form-group col-md-12">
+      <input type="text" class="form-control" name="weight" size="10" placeholder="Enter Your Weight In Kg" required="required" ></div>
+      <div class="form-group col-md-12">
+       <input type="text" class="form-control" name="height" size="10" placeholder="Height In cm" required="required">
+      </div>
+
+          </div>
+      <input type="button" value="Calculate BMI" class="btn btn-primary btn-lg btn-block" onclick="calculateBmi()"><br>
+       <div class="form-group col-md-12">
+       <input type="text" class="form-control" name="bmi" size="10" readonly placeholder="BMI">
+      </div>
+       <div class="form-group col-md-12">
+       <input type="text" class="form-control" name="meaning" size="25" readonly placeholder="Result">
+      </div>
+       <input type="reset" value="Reset" class="btn btn-success btn-lg btn-block" >
+   </div>
+</form>
+
+</div>
+
+<script>
+function calculateBmi() {
+var weight = document.bmiForm.weight.value
+var height = document.bmiForm.height.value
+if(weight > 0 && height > 0){
+var finalBmi = weight/(height/100*height/100)
+document.bmiForm.bmi.value = finalBmi
+if(finalBmi < 18.5){
+document.bmiForm.meaning.value = "You are too thin."
+}
+if(finalBmi > 18.5 && finalBmi < 25){
+document.bmiForm.meaning.value = "You are healthy."
+}
+if(finalBmi > 25 && finalBmi<30 ){
+document.bmiForm.meaning.value = "You have overweight."
+}
+if(finalBmi > 30  ){
+document.bmiForm.meaning.value = "You are at risk, you need to lose weight."
+}
+}
+else{
+alert("Please Fill in everything correctly")
+}
+}
+
+</script>
+
+{% endblock content %}
+

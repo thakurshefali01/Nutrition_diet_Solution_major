@@ -1,0 +1,53 @@
+{% extends 'masterpage.html' %}
+{% block title %}
+exercise Procedure
+{% endblock title %}
+{% block content %}
+
+
+<div class="procedure-body" >
+{% if data %}
+ {% for i in data %}
+		<div class="agile-procedure">
+
+			<div class="content2" >
+
+				<div class="grids-heading gallery-heading signup-heading" >
+					<h2>{{ i.exercise_name }}</h2>
+				</div>
+                <div style="padding:20px;text-align:justify; margin:10px 10px 10px 10px;">
+                <h2 class="text-center" >Parts Included</h2>
+                <p style="margin:10px;">{{ i.parts_included }}</p>
+                <div class="spacer"></div>
+
+
+                        <h2 class="text-center">Equipments Required</h2>
+                            <ul>
+                                <li style="margin:10px;">{{ i.equipment_required }}</li>
+                            </ul>
+                        <h2 class="text-center">Steps</h2>
+                            <ul>
+                                <li style="margin:10px;">{{ i.steps_included }}</li>
+                            </ul>
+
+                </div>
+                <div class="text-center">
+                    {% if request.session.roleid == 3 %}
+                <a href="{% url 'Fitness_panel:edit_exercise_procedure' %}?id={{ i.ex_procedure_id }}" style="display:none;" class="btn btn-dark ">Edit Procedure</a>
+                {% else %}
+                   <a href="{% url 'Fitness_panel:edit_exercise_procedure' %}?id={{ i.ex_procedure_id }}" class="btn btn-dark ">Edit Procedure</a>
+
+                    {% endif %}
+                </div>
+            </div>
+
+
+        </div>
+
+{% endfor %}
+ {% else %}
+ <h1> no data found </h1>
+  {% endif %}
+</div>
+
+{% endblock content %}

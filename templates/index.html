@@ -24,6 +24,9 @@
     <link rel="stylesheet" href="/assets/css/icomoon.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/admin_css/font-awesome.css">
+      <!-- Start of  Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=5c6d9d61-0165-46cb-954a-07a9f52f4fbb"> </script>
+<!-- End of  Zendesk Widget script -->
   </head>
   <body>
      <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -38,8 +41,9 @@
 	          <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
 	          <li class="nav-item"><a href="{% url 'front_panel:about' %}" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="{% url 'front_panel:recipes' %}" class="nav-link">Recipes</a></li>
-	          <li class="nav-item"><a href="{% url 'front_panel:excercise' %}" class="nav-link">Exercise</a></li>
+	          <li class="nav-item"><a href="{% url 'front_panel:exercise' %}" class="nav-link">Exercise</a></li>
               <li class="nav-item"><a href="{% url 'front_panel:charts' %}" class="nav-link">Charts</a></li>
+                <li class="nav-item"><a href="{% url 'front_panel:bmi' %}" class="nav-link" >BMI</a></li>
 	          <li class="nav-item"><a href="{% url 'front_panel:contact' %}" class="nav-link">Contact</a></li>
                 {% if request.session.authenticated %}
                 {% if request.session.roleid == 3 %}
@@ -110,23 +114,22 @@
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Healthy Khao</h2>
-              <p>This site is for project purpose only</p>
-              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-              </ul>
+              <p style="text-align:justify;">We at Healthy Khao encourage people to live a healthier life, with our exotic recipes and exercises.
+                  Also we allow people to add there own recipes and exercises to encourage other people with there ideas of healthy living.</p>
+                <p><strong>Note:This site is for project purpose only</strong></p>
+
             </div>
           </div>
           <div class="col-md">
             <div class="ftco-footer-widget mb-4 ml-md-5">
               <h2 class="ftco-heading-2">Information</h2>
               <ul class="list-unstyled">
-
-                <li><a href="#" class="py-2 d-block">About Healthy Khao</a></li>
-                <li><a href="#" class="py-2 d-block">Privacy Policy</a></li>
-                <li><a href="#" class="py-2 d-block">Accessibility Help</a></li>
-                <li><a href="#" class="py-2 d-block">Advertise with us</a></li>
+                <li><a href="{% url 'front_panel:about' %}" class="py-2 d-block">About Healthy Khao</a></li>
+                <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
               </ul>
             </div>
           </div>
@@ -134,10 +137,10 @@
              <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Categories</h2>
               <ul class="list-unstyled">
-                  <li><a href="#" class="py-2 d-block">About</a></li>
-                <li><a href="#" class="py-2 d-block">Recipes</a></li>
-                <li><a href="#" class="py-2 d-block">Exercise</a></li>
-                <li><a href="#" class="py-2 d-block">Charts</a></li>
+                <li><a href="{% url 'front_panel:recipes' %}" class="py-2 d-block">Recipes</a></li>
+                <li><a href="{% url 'front_panel:exercise' %}" class="py-2 d-block">Exercise</a></li>
+                <li><a href="{% url 'front_panel:charts' %}" class="py-2 d-block">Charts</a></li>
+                <li><a href="{% url 'front_panel:bmi' %}" class="py-2 d-block">BMI</a></li>
               </ul>
             </div>
           </div>
@@ -146,9 +149,10 @@
             	<h2 class="ftco-heading-2">Have a Questions?</h2>
             	<div class="block-23 mb-3">
 	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">A.B.V.G.I.E.T, Shimla</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">654216127</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">thakurshefali01@gmail.com</span></a></li>
+                    <li><span class="icon icon-map-marker"></span><span class="text">NETMAX TECHNOLOGIES,<br>SCO 66-67,Sector 34 A, Chandigarh, 160034</span></li>
+	                <li><span class="icon icon-map-marker"></span><span class="text">A.B.V.G.I.E.T, Pragatinagar, Distt. Shimla, HP, 171202</span></li>
+	                <li><span class="icon icon-phone"></span><span class="text">+91 8894100647</span></li>
+	                <li><span class="icon icon-envelope"></span><span class="text">thakurshefali53@gmail.com</span></li>
 	              </ul>
 	            </div>
             </div>

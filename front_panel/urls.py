@@ -8,8 +8,8 @@ urlpatterns=[
         url(r'^about/$',views.about,name="about"),
         url(r'^recipes/$',views.recipes_page,name="recipes"),
         url(r'^contact/$',views.contact,name="contact"),
-        url(r'^exercise/$',views.exercise_page,name="excercise"),
-        url(r'^single/$',views.single,name="single"),
+        url(r'^exercise/$',views.exercise_page,name="exercise"),
+
         url(r'^signup/$',views.signup,name="signup"),
         url(r'^logout/$',views.logout,name="logout"),
         url(r'^error/$',views.pagenotfound,name="error"),
@@ -19,10 +19,15 @@ urlpatterns=[
         url(r'^update_profile/$', views.update_profile, name="update_profile"),
         url(r'^change_password/$', views.change_password, name="change_password"),
         url(r'^show_cart/$', views.show_cart, name="show_cart"),
-        url(r'^cart/$', views.cart, name="cart"),
-        url(r'^cart1/$', views.cart1, name="cart1"),
+        url(r'^cart/$', views.cart_temp1, name="cart"),
+        url(r'^cart1/$', views.cart_temp2, name="cart1"),
         url(r'^charts/$', views.charts, name="charts"),
         url(r'^remove_item/$', views.remove_item, name="remove_item"),
+        url(r'^bmi/$',views.bmi,name="bmi"),
+        url(r'^purchased/$',views.purchased,name="purchased"),
+        url(r'^sales/$',views.saledata,name="sales"),
+        url(r'^already/$',views.already,name='already')
+
 
 
 ]

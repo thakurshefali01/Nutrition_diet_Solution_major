@@ -39,7 +39,7 @@ class TemporaryCartTable(models.Model):
     recipe_image = models.CharField(max_length=225, default="", null=True)
     recipe_description = models.CharField(max_length=225, default="", null=True)
     recipe_price = models.CharField(max_length=225, null=True)
-
+    item_added=models.BooleanField(default=False)
 
 class SaleTable(models.Model):
     table_id = models.AutoField(primary_key=True)
@@ -57,3 +57,11 @@ class ContactTable(models.Model):
     contact_subject = models.CharField(max_length=225, default="",null=True)
     contact_message = models.TextField(default="")
     contact_time = models.CharField(max_length=225 ,default="")
+
+class payment_token(models.Model):
+    token_id=models.AutoField(primary_key=True)
+    token_pay=models.CharField(max_length=10000,null=True)
+    invoice=models.CharField(max_length=10000,null=True)
+    user_email=models.CharField(max_length=10000,null=True)
+    verify_pay=models.NullBooleanField(default=0)
+

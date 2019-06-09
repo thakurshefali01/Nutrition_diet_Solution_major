@@ -1,0 +1,48 @@
+{% extends 'masterpage.html' %}
+{% block title %}
+Edit
+{% endblock title %}
+{% block content %}
+<div class="signup-body">
+		<div class="agile-signup">
+
+			<div class="content2">
+				<div class="grids-heading gallery-heading signup-heading">
+					<h2>Edit </h2>
+				</div>
+				<form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ dict.as_p }}
+                    {% if inserted %}
+                    <script>alert('data updated');</script>
+                    {% endif %}
+<div class="form-group">
+
+</div>
+                    <div class="form-group ">
+                    <label>update category</label><select name="exercise_category">
+                        <option value="0">Select</option>
+                        {% if exd %}
+                        {% for i in exd %}
+                        <option value="{{ i.exercise_id }}">{{ i.exercise_category}}</option>
+                        {% endfor %}
+                        {% else %}
+                        <option>No Category Found</option>
+                        {% endif %}
+                    </select>
+    </div>
+					<input type="text" name="exercise_name" value="{{ gt.exercise_name }}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Exercise name';}">
+					<div class="form-group">
+                    <input type="text" name="exercise_description" value="{{ gt.exercise_discription }}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Exercise description';}">
+                        </div>
+                    <div class="form-group text-left">
+                    <input type="file" name="exercise_image" value="exercise image" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Exercise image';}">
+                    </div>
+                    <input type="submit" class="register" value="Update">
+				</form>
+				<a href="{% url 'Fitness_panel:index_fitness' %}">Back To Home</a>
+			</div>
+        </div>
+</div>
+
+{% endblock content %}

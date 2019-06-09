@@ -1,0 +1,18 @@
+{% extends 'index.html'%}
+{% block title %}
+Payment
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+   <div class="row">
+    <div class="payment-box col-md-4 offset-md-4 text-center">
+
+      <h1 >PAYMENT  CANCELED</h1>
+        <p>Sorry for inconviniece<br> Try after some time</p>
+        <a href="{% url 'front_panel:index'%}" class="btn btn-primary" > GO back to home page </a>
+        </div>
+
+</div>
+
+{% endblock content%}

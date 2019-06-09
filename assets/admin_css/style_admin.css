@@ -117,6 +117,7 @@ body a:hover{
 	.form-horizontal .control-label,.form-horizontal .radio,.form-horizontal .checkbox,.form-horizontal .radio-inline,.form-horizontal .checkbox-inline{margin-bottom:5px;padding-top:6px}@media(min-width:768px){.form-horizontal .control-label{text-align:left}}.form-group:last-child{margin-bottom:0}select{font-family:sans-serif}
 	.ios-device select{-webkit-appearance:menulist;-moz-appearance:menulist}
 	textarea{height:auto;width:100%;max-width:100%}
+
 	textarea.no-resize{resize:none}
 	.character-counter,.field-annotation{display:block;text-align:right;font-size:12px}
 	.btn:focus{outline:0}.btn:active,.btn.active{-webkit-box-shadow:none;box-shadow:none}
@@ -462,6 +463,7 @@ body a:hover{
 	}
 .main-grid{
     padding: 3em;
+
 }
 .dashboard-page .title-bar {
     position: relative;
@@ -985,15 +987,22 @@ ul.dropdown-menu.drp-mnu li {
 	border: solid 10px #d8d8d8;
     margin-bottom: 2em;
     background: #FFFFFF;
+    height:300px;
+
+}
+.social-bg{
+    height:72vh;
 }
 .grid-info {
     background: #fff;
-    padding: 1em;
+
+
+    margin-top:50px;
+
 }
 /*--social-icons--*/
 .top-comment-grid {
 	padding: 0;
-    width: 24.1%;
     overflow: hidden;
 }
 .top-comment-grid:nth-child(2) {
@@ -1020,7 +1029,7 @@ ul.dropdown-menu.drp-mnu li {
 }
 .comments-icon i.fa.fa-eye{
 	font-size: 5em;
-    color: #2CCCAB;
+    color: black;
 }
 .comments-icon{
 	float:left;
@@ -3702,8 +3711,9 @@ body.signup-body {
     margin: 1.5em auto 0;
 }
 .text-left {
-    float: left;
-    text-align: center;
+    /*float: left;
+    text-align: center;*/
+    padding-left:30px;
 }
 .signin-text p {
     font-size: .9em;
@@ -4444,6 +4454,7 @@ div#vmap {
 	}
 	.main-grid {
 		padding: 1em;
+
 	}
 	.buttons-heading h2, .grids-heading h2, .chart-heading h2, .table-heading h2, .map-heading h2 {
 		font-size: 2em;

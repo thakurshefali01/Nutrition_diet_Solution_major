@@ -17,7 +17,7 @@ Recipe Procedure
 				</div>
                 <div style="padding:20px;text-align:justify; margin:10px 10px 10px 10px;">
                 <h2 class="text-center" >PROCEDURE</h2>
-                <p>{{ i.procedure_discription }}</p>
+                <p style="margin:10px;">{{ i.procedure_discription }}</p>
                 <div class="spacer"></div>
                         <div class="table-responsive">
                             <table class="table">
@@ -41,19 +41,23 @@ Recipe Procedure
 
                         <h2 class="text-center">INGRIDENTS</h2>
                             <ul>
-                                <li>{{ i.procedure_ingredients }}</li>
+                                <li style="margin:10px;">{{ i.procedure_ingredients }}</li>
                             </ul>
                         <h2 class="text-center">INSTRUCTIONS</h2>
                             <ul>
-                                <li>{{ i.procedure_instructions }}</li>
+                                <li style="margin:10px;">{{ i.procedure_instructions }}</li>
                             </ul>
                         <h2 class="text-center">NOTE</h2>
                             <ul>
-                                <li>{{ i.procedure_notes }}</li>
+                                <li style="margin:10px;">{{ i.procedure_notes }}</li>
                             </ul>
                 </div>
                 <div class="text-center">
-                <a href="{% url 'nutritionist:edit_procedure' %}?id={{ i.procedure_id }}" ><button type="button" class="btn btn-dark " >Edit Procedure</button></a>
+                    {% if request.session.roleid == 3 %}
+                    <a href="{% url 'nutritionist:edit_procedure' %}?id={{ i.procedure_id }}" style="display:none;" class="btn btn-dark " >Edit Procedure</a>
+                    {% else %}
+                    <a href="{% url 'nutritionist:edit_procedure' %}?id={{ i.procedure_id }}"  class="btn btn-dark " >Edit Procedure</a>
+                    {% endif %}
                 </div>
             </div>
 

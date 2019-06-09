@@ -45,8 +45,12 @@ INSTALLED_APPS = [
     'front_panel',
     'admin_panel',
     'nutritionist',
-    'Fitness_panel'
+    'Fitness_panel',
+    'paypal.standard.ipn'
 ]
+#st@160022
+PAYPAL_RECEIVER_EMAIL = 'thakurshefali53-facilitator-1@gmail.com'
+PAYPAL_TEST = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

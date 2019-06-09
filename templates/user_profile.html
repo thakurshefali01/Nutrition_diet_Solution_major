@@ -1,0 +1,52 @@
+{% extends 'masterpage.html' %}
+{% block title %}
+User Profile
+{% endblock %}
+{% block content %}
+    {% if login %}
+                <script>alert('Welcome to User Profile');</script>
+    {% endif %}
+		<div class="container-fluid social-bg" >
+
+		<div class="main-grid row">
+
+			<div class="social grid col-md-6 col-md-offset-3" id="nutri">
+					<div class="grid-info row">
+						<div class="col-md-6">
+							<div class="top-comment-grid">
+							<div class="comments likes">
+								<div class="comments-icon">
+									<i class="fa fa-user fa-4x"></i>
+								</div>
+								<div class="comments-info likes-info">
+									<h3>{{ active }}</h3>
+									<a href="#">Total number of logins</a>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+								</div>
+						</div>
+						<div class="col-md-6">
+							<div class="top-comment-grid">
+							<div class="comments">
+								<div class="comments-icon">
+									<i class="fa fa-plus-square-o fa-4x"></i>
+								</div>
+								<div class="comments-info">
+									<h3>{{ bi }}</h3>
+									<a href="#">Number of itmes purchased</a>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+						</div>
+</div>
+
+
+					</div>
+			</div>
+
+
+		</div>
+	</div>
+
+{% endblock content %}

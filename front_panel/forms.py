@@ -1,5 +1,5 @@
 from django import forms
-from front_panel.models import MySite_User,User_role,Login_details, TemporaryCartTable,SaleTable,ContactTable
+from front_panel.models import MySite_User,User_role,Login_details, TemporaryCartTable,SaleTable,ContactTable,payment_token
 
 class User_roleForm(forms.ModelForm):
     class Meta():
@@ -51,7 +51,8 @@ class TemporaryTableForm(forms.ModelForm):
             "recipe_name",
             "recipe_image",
             "recipe_description",
-            "recipe_price"
+            "recipe_price",
+            "itme_added"
         ]
 
 class SaleTableForm(forms.ModelForm):
@@ -78,4 +79,16 @@ class ContactTableForm(forms.ModelForm):
             "contact_subject",
             "contact_message",
             "contact_time"
+        ]
+
+class payment_tokenForm(forms.ModelForm):
+    class Meta:
+        model =payment_token
+        exclude=[
+            "token_id",
+            "token_pay",
+            "invoice",
+            "user_email",
+            "verify_pay"
+
         ]

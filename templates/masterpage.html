@@ -1,0 +1,225 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<head>
+<title>{% block title %}{% endblock %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- bootstrap-css -->
+<link rel="stylesheet" href="/assets/admin_css/bootstrap.css">
+<!-- //bootstrap-css -->
+<!-- Custom CSS -->
+<link href="/assets/admin_css/style_admin.css" rel='stylesheet' type='text/css' />
+<!-- font CSS -->
+<link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<!-- font-awesome icons -->
+<link rel="stylesheet" href="/assets/admin_css/font.css" type="text/css"/>
+<link href="/assets/admin_css/font-awesome.css" rel="stylesheet"> 
+<!-- //font-awesome icons -->
+	<!-- Start of  Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=5c6d9d61-0165-46cb-954a-07a9f52f4fbb"> </script>
+<!-- End of  Zendesk Widget script -->
+<script src="/assets/admin_js/jquery2.0.3.min.js"></script>
+<script src="/assets/admin_js/modernizr.js"></script>
+<script src="/assets/admin_js/jquery.cookie.js"></script>
+<script src="/assets/admin_js/screenfull.js"></script>
+		<script>
+		$(function () {
+			$('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
+
+			if (!screenfull.enabled) {
+				return false;
+			}
+
+			
+
+			$('#toggle').click(function () {
+				screenfull.toggle($('#container')[0]);
+			});	
+		});
+		</script>
+<!-- charts -->
+<script src="/assets/admin_js/raphael-min.js"></script>
+<script src="/assets/admin_js/morris.js"></script>
+<link rel="stylesheet" href="/assets/admin_css/morris.css">
+<!-- //charts -->
+<!--skycons-icons-->
+<script src="/assets/admin_js/skycons.js"></script>
+<!--//skycons-icons-->
+</head>
+<body class="dashboard-page">
+	<script>
+	        var theme = $.cookie('protonTheme') || 'default';
+	        $('body').removeClass (function (index, css) {
+	            return (css.match (/\btheme-\S+/g) || []).join(' ');
+	        });
+	        if (theme !== 'default') $('body').addClass(theme);
+        </script>
+	<nav class="main-menu">
+		<ul>
+			<li>
+                {% if request.session.authenticated %}
+					{% if request.session.roleid == 1 %}
+				    <a href="{% url 'admin_panel:admin_index' %}">
+					<i class="fa fa-home nav_icon"></i>
+					<span class="nav-text">
+					Dashboard
+					</span>
+                    </a>
+                    {% elif request.session.roleid == 2 %}
+				    <a href="{% url 'nutritionist:nutri_index' %}">
+					<i class="fa fa-home nav_icon"></i>
+					<span class="nav-text">
+					Dashboard
+					</span>
+                    </a>
+					{% elif request.session.roleid == 3 %}
+					<a href="{% url 'front_panel:user_profile' %}">
+					<i class="fa fa-home nav_icon"></i>
+					<span class="nav-text">
+					Dashboard
+					</span>
+                    </a>
+                    {% elif request.session.roleid == 4 %}
+                    <a href="{% url 'Fitness_panel:index_fitness' %}">
+					<i class="fa fa-home nav_icon"></i>
+					<span class="nav-text">
+					Dashboard
+					</span>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+
+			</li>
+			<li class="has-subnav">
+				<a href="javascript:;">
+				<i class="fa fa-cogs" aria-hidden="true"></i>
+				<span class="nav-text">
+					Settings
+				</span>
+				<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
+				</a>
+				<ul>
+					<li>
+					<a class="subnav-text" href="{% url 'front_panel:update_profile' %}">
+					Update Profile
+					</a>
+					</li>
+					<li>
+					<a class="subnav-text" href="{% url 'front_panel:change_password' %}">
+					Password Change
+					</a>
+					</li>
+				</ul>
+			</li>
+			{% if request.session.roleid == 4 %}
+			<li class="has-subnav">
+				<a href="{% url 'Fitness_panel:add_exercise' %}">
+					<i class="fa fa-list-ul" aria-hidden="true"></i>
+					<span class="nav-text">Add Exercise</span>
+				</a>
+			</li>
+			<li class="has-subnav">
+				<a href="{% url 'Fitness_panel:view_exercise' %}">
+					<i class="fa fa-list-ul" aria-hidden="true"></i>
+					<span class="nav-text">View-Added Exercise</span>
+				</a>
+			</li>
+			{% endif %}
+			{% if request.session.roleid == 2 %}
+			<li class="has-subnav">
+				<a href="{% url 'nutritionist:add_recipe'%}">
+					<i class="fa fa-list-ul" aria-hidden="true"></i>
+					<span class="nav-text">Add Recipe</span>
+				</a>
+			</li>
+			<li class="has-subnav">
+				<a href="{% url 'nutritionist:view_recipe'%}">
+					<i class="fa fa-list-ul" aria-hidden="true"></i>
+					<span class="nav-text">View-Added Recipe</span>
+				</a>
+			</li>
+			{% endif %}
+			{% if request.session.roleid == 1 %}
+			<li class="has-subnav">
+				<a href="{% url 'admin_panel:user_query'%}">
+					<i class="fa fa-list-ul" aria-hidden="true"></i>
+					<span class="nav-text">User Queries</span>
+				</a>
+			</li>
+
+			{% endif %}
+			{% if request.session.roleid == 3 %}
+			<li class="has-subnav">
+				<a href="{% url 'front_panel:purchased'%}">
+					<i class="fa fa-list-ul" aria-hidden="true"></i>
+					<span class="nav-text">Purchased Products</span>
+				</a>
+			</li>
+
+			{% endif %}
+
+		</ul>
+	</nav>
+	<section class="wrapper scrollable">
+		<nav class="user-menu">
+			<a href="javascript:;" class="main-menu-access">
+			<i class="icon-proton-logo"></i>
+			<i class="icon-reorder"></i>
+			</a>
+		</nav>
+		<div class="container-fluid">
+
+
+		<section class="title-bar row">
+
+			<div class="logo col-md-2">
+				{% if gd %}
+				<a href="#"><img src="/media/{{ gd.user_image }}" style="height:80px; width:80px; border-radius:50%;" alt=""/></a>
+					{% endif %}
+			</div>
+			<div class="col-md-8">
+				<h1 class="text-center">Welcome {{ request.session.name }}</h1>
+</div>
+
+
+			<div class="col-md-2">
+				<div class="profile_details_left">
+					<div class="profile_details">		
+						<ul>
+							<li class="dropdown profile_details_drop">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									<div class="profile_img">	
+										<span class="prfil-img"><i class="fa fa-user" aria-hidden="true"></i></span> 
+										<div class="clearfix"></div>	
+									</div>	
+								</a>
+								<ul class="dropdown-menu drp-mnu">
+									{% if request.session.roleid == 3 %}
+									<li> <a href="{% url 'front_panel:index' %}"><i class="fa fa-sign-out"></i> Home</a> </li>
+									{% else %}
+									<li> <a href="{% url 'front_panel:logout' %}"><i class="fa fa-sign-out"></i> Logout</a> </li>
+									{% endif %}
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</section>
+			</div>
+			{% block content%}
+			{% endblock %}
+		<!-- footer -->
+		<div class="footer">
+			<p> 2019 Healthy Khao. Design by Shefali Thakur</p>
+		</div>
+		<!-- //footer -->
+	</section>
+	<script src="/assets/admin_js/bootstrap.js"></script>
+	<script src="/assets/admin_js/proton.js"></script>
+
+</body>
+</html>

@@ -47,3 +47,15 @@ class AddExercise(models.Model):
     exercise_image=models.CharField(max_length=225,default="")
     exercise_discription=models.CharField(max_length=225, default="")
     exercise_price = models.CharField(max_length=225, null=True)
+    exercise_isProcedure = models.BooleanField(default=False)
+
+
+class Procedure_exercise(models.Model):
+    add_exercise_id = models.ForeignKey(AddExercise, on_delete=models.CASCADE, default="")
+    user_email = models.ForeignKey(MySite_User, on_delete=models.CASCADE, default="")
+    ex_procedure_id=models.AutoField(primary_key=True)
+    exercise_name=models.CharField(max_length=225, null=True)
+    parts_included=models.CharField(max_length=225, null=True)
+    equipment_required=models.CharField(max_length=225, null=True)
+    steps_included=models.TextField(default="")
+

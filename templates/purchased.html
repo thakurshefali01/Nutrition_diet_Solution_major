@@ -1,0 +1,58 @@
+{% extends 'masterpage.html' %}
+{% block title %}
+Purchased Itmes
+{% endblock title %}
+{% block content %}
+
+<div class="main-grid container-fluid">
+			<div class="agile-grids">
+				<!-- gallery -->
+				<div class="grids-heading gallery-heading">
+					<h2>Products</h2>
+				</div>
+
+				<div class="gallery-grids">
+						<div class="row">
+
+				{% if data %}
+                    {% for i in data %}
+							<div class="col-md-4 agile-gallery-grid">
+                                <div class="agile-gallery">
+									<a href="#" class="lsb-preview" data-lsb-group="header">
+
+										<img class="img-responsive" style="height:450px; " src="/media/{{i.recipe_image}}" alt="" />
+										<div class="agileits-caption">
+											<h4>{{ i.recipe_name }}</h4>
+											<p>{{ i.recipe_description}}</p>
+											<h3>₹{{i.recipe_price}}</h3>
+											<a href="{% url 'nutritionist:view_procedure' %}?id={{ i.recipe_id }}" class="btn btn-dark">View Procedure</a>
+                                        </div>
+									</a>
+								</div>
+                            </div>
+
+							{% endfor %}
+                            {% else %}
+                             <h1> no data found </h1>
+                            {% endif %}
+                        </div>
+
+
+
+
+
+
+						<script>
+							$(window).load(function() {
+							  $.fn.lightspeedBox();
+							});
+
+						</script>
+				</div>
+			<!-- //gallery -->
+
+			</div>
+
+</div>
+
+{% endblock content %}

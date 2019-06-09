@@ -1,0 +1,66 @@
+{% extends 'masterpage.html' %}
+{% block title %}
+View Exercise
+{% endblock title %}
+{% block content %}
+
+<div class="main-grid container-fluid">
+			<div class="agile-grids">
+				<!-- gallery -->
+				<div class="grids-heading gallery-heading">
+					<h2>Exercise</h2>
+				</div>
+
+				<div class="gallery-grids">
+					<div class="row">
+						{% if vd %}
+                    {% for i in vd %}
+
+								<div class="col-md-4 agile-gallery-grid" >
+                                <div class="agile-gallery ">
+									<a href="#" class="lsb-preview" data-lsb-group="header">
+
+										<img style="height:500px; width:450px;"   src="/media/{{i.exercise_image}}" alt="" />
+										<div class="agileits-caption">
+											<h4>{{ i.exercise_name }}</h4>
+											<p>{{ i.exercise_discription}}</p>
+											<h3>₹{{i.exercise_price}}</h3>
+                                            <a href="{% url 'Fitness_panel:delete' %}?id={{ i.add_exercise_id }}" ><button type="button" class="btn btn-danger">Delete</button></a>
+                                        <a href="{% url 'Fitness_panel:edit_exercise' %}?id={{ i.add_exercise_id }}" ><button type="button" class="btn btn-success">Edit</button></a>
+                                            {% if i.exercise_isProcedure == 1 %}
+                                            <h3 style="color:white;">Already Added</h3>
+                                                <a href="{% url 'Fitness_panel:view_exercise_procedure' %}?id={{ i.add_exercise_id }}" ><button type="button" class="btn btn-dark">View Procedure</button></a>
+                                                {% else %}
+                                        <a href="{% url 'Fitness_panel:add_exercise_procedure' %}?id={{ i.add_exercise_id }}" ><button type="button" class="btn btn-dark">Add Procedure</button></a>
+                                            {% endif %}
+
+                                        </div>
+									</a>
+								</div>
+                            </div>
+
+						{% endfor %}
+                            {% else %}
+                             <h1> no data found </h1>
+                            {% endif %}
+
+
+
+                        </div>
+
+
+
+						<script>
+							$(window).load(function() {
+							  $.fn.lightspeedBox();
+							});
+
+						</script>
+				</div>
+			<!-- //gallery -->
+
+			</div>
+
+</div>
+
+{% endblock content %}

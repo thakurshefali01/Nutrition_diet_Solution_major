@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+{% block title %}
+User Cart
+{% endblock %}
+{% block content %}
+<section class="hero-wrap hero-wrap-2" style="background-image: url('/assets/images/bg_9.jpg');">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate pb-5 text-center">
+            <h1 class="mb-3 bread">Cart</h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Cart <i class="ion-ios-arrow-forward"></i></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+<section class="ftco-section">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 h1 text-center">
+            <span>Hey, <b>{{ request.session.emailid }}</b>
+                <p>Your Total Amount is {{ total.recipe_price__sum }}</p>
+                <p>Invoice Number:{{ invoice }}</p>
+            </span>
+            <a href="{% url 'payment_process' %}" class="btn btn-primary btn-block">Proceed to payment...</a>
+        </div>
+    </div>
+    <div class="row">
+        {% if data %}
+    {% for i in data %}
+    <div class="col-md-6 col-lg-12 ftco-animate">
+         <div class="blog-entry d-lg-flex">
+    		<div class="half">
+				<a class="img d-flex align-items-end" style="height: 300px; width:500px; background-image: url(/media/{{ i.recipe_image }});">
+		            	<div class="overlay"></div>
+                </a>
+			   </div>
+			   <div class="text px-md-4 px-lg-5 half pt-3">
+	    		<h3>{{ i.recipe_name }}</a></h3>
+	    		<p style="text-align:justify;">{{ i.recipe_description}}</p>
+				<h3>₹{{i.recipe_price}}</h3>
+	    		<p class="mb-0"><a href="{% url 'front_panel:remove_item' %}?id={{ i.recipe_id }}" class="btn btn-danger">Remove<span class="icon-arrow_forward ml-4"></span></a></p>
+	    		</div>
+		    	</div>
+    			</div>
+              {% endfor %}
+        {% else %}
+        <h1>Cart is empty</h1>
+        {% endif %}
+            <a href="{% url 'payment_process' %}" class="btn btn-primary btn-block">Proceed to payment...</a>
+    </div>
+    </div>
+</section>
+
+
+{% endblock %}
